@@ -1,2 +1,2 @@
-# cmj.github.io
-CMJ小站
+# mjchen
+mjchen 的日记
