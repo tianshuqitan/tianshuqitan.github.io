@@ -1,0 +1,1 @@
+import{_ as e,c as t,o as r,a as o}from"./app.9a160ded.js";const y='{"title":"Python \u4E66\u7B7E","description":"","frontmatter":{},"relativePath":"contents/bookmarks/python.md","lastUpdated":1648693752303}',n={},a=o("",5),s=[a];function h(l,p,_,i,c,d){return r(),t("div",null,s)}var g=e(n,[["render",h]]);export{y as __pageData,g as default};

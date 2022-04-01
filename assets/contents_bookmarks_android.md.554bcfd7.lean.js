@@ -1,0 +1,1 @@
+import{_ as e,c as r,o,a}from"./app.9a160ded.js";const k='{"title":"Android \u4E66\u7B7E","description":"","frontmatter":{},"relativePath":"contents/bookmarks/android.md","lastUpdated":1648628435395}',t={},n=a("",2),i=[n];function l(d,s,p,_,c,h){return o(),r("div",null,i)}var u=e(t,[["render",l]]);export{k as __pageData,u as default};

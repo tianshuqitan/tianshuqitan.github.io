@@ -1,0 +1,1 @@
+import{_ as e,c as r,o as t,a}from"./app.9a160ded.js";const f='{"title":"Sublime \u4E66\u7B7E","description":"","frontmatter":{},"relativePath":"contents/bookmarks/sublime.md","lastUpdated":1648694704707}',o={},l=a("",2),n=[l];function i(s,c,h,u,m,p){return t(),r("div",null,n)}var b=e(o,[["render",i]]);export{f as __pageData,b as default};

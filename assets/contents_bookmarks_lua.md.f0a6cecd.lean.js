@@ -1,0 +1,1 @@
+import{_ as e,c as r,o as a,a as t}from"./app.9a160ded.js";const f='{"title":"Lua \u4E66\u7B7E","description":"","frontmatter":{},"relativePath":"contents/bookmarks/lua.md","lastUpdated":1648694623351}',l={},n=t("",5),o=[n];function i(s,p,h,u,g,_){return a(),r("div",null,o)}var d=e(l,[["render",i]]);export{f as __pageData,d as default};
