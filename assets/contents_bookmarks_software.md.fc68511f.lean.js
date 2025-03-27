@@ -1,1 +1,0 @@
-import{_ as e,c as r,o as t,a}from"./app.9a160ded.js";const m='{"title":"\u8F6F\u4EF6","description":"","frontmatter":{},"relativePath":"contents/bookmarks/software.md","lastUpdated":1648696011176}',o={},n=a("",2),l=[n];function i(h,s,p,d,c,_){return t(),r("div",null,l)}var g=e(o,[["render",i]]);export{m as __pageData,g as default};

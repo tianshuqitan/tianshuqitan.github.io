@@ -1,1 +1,0 @@
-import{_ as e,c as r,o as t,a as s}from"./app.9a160ded.js";const d='{"title":"Vue \u4E66\u7B7E","description":"","frontmatter":{},"relativePath":"contents/bookmarks/vue.md","lastUpdated":1648695165346}',a={},o=s("",7),n=[o];function l(i,p,u,c,_,h){return t(),r("div",null,n)}var g=e(a,[["render",l]]);export{d as __pageData,g as default};

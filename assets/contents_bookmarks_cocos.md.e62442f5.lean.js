@@ -1,1 +1,0 @@
-import{_ as e,c as r,o,a}from"./app.9a160ded.js";const _='{"title":"Cocos \u4E66\u7B7E","description":"","frontmatter":{},"relativePath":"contents/bookmarks/cocos.md","lastUpdated":1648694661186}',t={},l=a("",5),n=[l];function s(c,i,p,h,d,f){return o(),r("div",null,n)}var b=e(t,[["render",s]]);export{_ as __pageData,b as default};

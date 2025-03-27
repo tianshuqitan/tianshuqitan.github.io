@@ -1,1 +1,0 @@
-import{_ as e,c as r,o,a}from"./app.9a160ded.js";const m='{"title":"\u6E38\u620F\u4E66\u7B7E","description":"","frontmatter":{},"relativePath":"contents/bookmarks/gamedesign.md","lastUpdated":1648629075960}',n={},t=a("",7),l=[t];function i(p,s,h,f,_,c){return o(),r("div",null,l)}var g=e(n,[["render",i]]);export{m as __pageData,g as default};

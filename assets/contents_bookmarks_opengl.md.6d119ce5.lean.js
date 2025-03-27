@@ -1,1 +1,0 @@
-import{_ as e,c as r,o as a,a as n}from"./app.9a160ded.js";const c='{"title":"OpenGL \u4E66\u7B7E","description":"","frontmatter":{},"relativePath":"contents/bookmarks/opengl.md","lastUpdated":1648693543171}',o={},t=n("",11),l=[t];function i(p,s,h,g,f,d){return a(),r("div",null,l)}var m=e(o,[["render",i]]);export{c as __pageData,m as default};
