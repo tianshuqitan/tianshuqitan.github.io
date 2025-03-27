@@ -1,0 +1,19 @@
+# Node.js
+node_modules/
+npm-debug.log
+
+# VuePress
+# 默认临时文件目录
+docs/.vuepress/.temp
+# 默认缓存目录
+docs/.vuepress/.cache
+# 默认构建生成的静态文件目录
+docs/.vuepress/dist
+
+# System
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
