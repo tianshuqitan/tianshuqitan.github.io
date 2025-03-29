@@ -1,6 +1,7 @@
 ---
 home: true
-title: 主页
 layout: BlogHome
+title: 主页
 icon: house
+hero: false
 ---

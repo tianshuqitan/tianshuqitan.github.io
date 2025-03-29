@@ -1,6 +1,13 @@
 ---
 title: "AI"
+tag:
+  - AI
+star: true
 ---
+
+AI 相关内容，如大模型、API 平台、AI IDE与插件等。
+
+<!-- more -->
 
 # 总览
 
@@ -15,10 +22,10 @@ title: "AI"
 
 * [OpenRouter](https://openrouter.ai/)
 
-## IDE or Plugins
+## IDE/Plugins
 
 * [Cursor](https://www.cursor.com/)
 * [Cline](https://app.cline.bot/)
 * [RooCode](https://roocode.com/)
-* [Trae - 字节](https://traeide.com/)
 * [Continue](https://www.continue.dev/)
+* [Trae(字节)](https://traeide.com/)

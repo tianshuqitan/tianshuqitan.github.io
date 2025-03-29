@@ -1,6 +1,7 @@
 ---
-title : 部署
+title : Vuepress 部署
 order : 2
+article: false
 ---
 
 # 部署到 Github

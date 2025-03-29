@@ -5,6 +5,6 @@
 import { sidebar } from "vuepress-theme-hope";
 
 export default sidebar({
-    "/Vuepress/": "structure",
+    "/Vue/": "structure",
     "/Bookmarks/": "structure",
 });
