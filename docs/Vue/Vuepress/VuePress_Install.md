@@ -6,6 +6,8 @@ article: false
 
 # 安装
 
+* [Vuepress - 安装(官网)](https://vuepress.vuejs.org/zh/guide/getting-started.html)
+
 ## 环境
 
 * [Node.js v18.19.0+](https://nodejs.org/)
@@ -123,6 +125,19 @@ echo '# Hello VuePress' > docs/README.md
 # VuePress 默认构建生成的静态文件目录
 .vuepress/dist
 ```
+
+## 已有项目安装依赖包
+
+在项目已经创建，`package.json` 已存在，但是 `node_modules` 不存在的情况下，需要安装 `package`。
+
+::: code-tabs#shell
+
+@tab pnpm
+```bash
+pnpm install
+```
+
+:::
 
 ## 使用 VuePress
 

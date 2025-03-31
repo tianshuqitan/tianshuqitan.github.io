@@ -353,3 +353,14 @@ export default hopeTheme({
 * `editLink`: 是否展示编辑此页链接
 * `changelog`: 是否显示变更日志
 
+### [Frontmatter](https://theme-hope.vuejs.press/zh/config/frontmatter/info.html)
+
+* `title`: 当前页面内容标题，默认为 Markdown 文件中的第一个 h1 标签内容。
+* `date`: 写作时间，格式: `YYYY-MM-DD` 或 `YYYY-MM-DD hh:mm:ss`
+* `description`: 页面的描述。会覆盖站点配置中的 `description` 配置项。
+* `icon`: 当前页面图标的 FontClass 或文件路径 (建议填写)。
+* `category`: `string | string[]`，分类。
+* `tag`: `string | string[]`，标签。
+* `article`: `boolean`，是否将该文章添加至文章列表中。
+* `sticky`: `boolean | number`，是否在列表中置顶。当填入数字时，数字越大，排名越靠前。
+* `star`: `boolean | number`，是否标为星标文章。当填入数字时，数字越大，排名越靠前。
