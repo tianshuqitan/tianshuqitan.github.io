@@ -18,11 +18,11 @@ export default navbar([
         ],
     },
     {
-        text: "AI",
-        link: "/AI/"
-    },
-    {
         text: "书签",
         link: "/Bookmarks/"
     },
+    {
+        text: "编程语言",
+        link: "/Language/"
+    }
 ]);

@@ -1,3 +1,12 @@
+---
+title: Rust
+article: false
+---
+
+Rust 相关网站。
+
+<!-- more -->
+
 # Rust
 
 **官网**

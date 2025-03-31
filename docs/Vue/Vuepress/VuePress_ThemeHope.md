@@ -364,3 +364,35 @@ export default hopeTheme({
 * `article`: `boolean`，是否将该文章添加至文章列表中。
 * `sticky`: `boolean | number`，是否在列表中置顶。当填入数字时，数字越大，排名越靠前。
 * `star`: `boolean | number`，是否标为星标文章。当填入数字时，数字越大，排名越靠前。
+
+### [Markdown](https://theme-hope.vuejs.press/zh/guide/markdown/intro.html)
+
+提示容器
+
+:::important
+重要提示。
+:::
+
+:::info
+信息提示。
+:::
+
+:::note
+注释容器。
+:::
+
+:::tip
+提示容器。
+:::
+
+:::warning
+警告容器。
+:::
+
+:::caution 自定义标题
+危险容器。
+:::
+
+:::details 自定义标题
+详情容器。
+:::
