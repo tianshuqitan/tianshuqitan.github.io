@@ -11,6 +11,10 @@ export default navbar([
         link: "/"
     },
     {
+        text: "Unity",
+        link: "/Unity/"
+    },
+    {
         text: "Vue",
         prefix: "Vue/",
         children: [
