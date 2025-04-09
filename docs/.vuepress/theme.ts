@@ -1,13 +1,13 @@
 import { hopeTheme } from "vuepress-theme-hope"
 import navbar from "./navbar.js";
-import sidebar from "./sidebar.js"
+import { sidebarConfig } from "./sidebar.js"
 
 export default hopeTheme({
     author: "Mr.Chen",
     // 顶部导航栏
     navbar: navbar,
     // 侧边栏
-    sidebar: sidebar,
+    sidebar: sidebarConfig,
     // 启用插件
     plugins: {
         blog: {

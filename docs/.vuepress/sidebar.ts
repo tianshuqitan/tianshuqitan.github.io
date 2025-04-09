@@ -4,7 +4,7 @@
 
 import { sidebar } from "vuepress-theme-hope";
 
-export default sidebar({
+export const sidebarConfig = sidebar({
     "/Vue/": "structure",
     "/Bookmarks/": "structure",
     "/Language/": "structure",
