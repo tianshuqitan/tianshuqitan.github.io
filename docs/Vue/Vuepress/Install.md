@@ -1,6 +1,6 @@
 ---
-title: Vuepress 安装
-order : 1
+title: 安装
+order : 2
 article: false
 ---
 

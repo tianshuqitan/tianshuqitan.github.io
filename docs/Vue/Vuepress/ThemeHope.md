@@ -1,5 +1,5 @@
 ---
-title : Vuepress 主题 Hope
+title : 主题
 order : 5
 article: false
 ---
@@ -8,7 +8,7 @@ Vuepress ThemeHope 安装于配置。
 
 <!-- more -->
 
-# 主题 Hope
+# Hope 主题
 
 ## 链接
 
@@ -240,7 +240,7 @@ export default defineUserConfig({
 
 ### 侧边栏
 
-多个侧边栏：不同的页面组显示不同的侧边栏。
+多个侧边栏：通过 `路径前缀: 配置` 为不同的页面组显示不同的侧边栏。
 
 目录结构
 
@@ -296,7 +296,7 @@ sidebar: {
 },
 ```
 
-在页面的 `Frontmatter` 中通过 `index` 控制是否被包含，通过 `order` 控制顺序。
+在页面的 `Frontmatter` 中通过 `index` 控制是否显示在侧边栏，通过 `order` 控制顺序。
 
 ### 页脚
 

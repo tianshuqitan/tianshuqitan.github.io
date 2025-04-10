@@ -1,6 +1,6 @@
 ---
-title : Vuepress 部署
-order : 2
+title : 部署
+order : 3
 article: false
 ---
 

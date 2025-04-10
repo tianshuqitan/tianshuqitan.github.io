@@ -7,16 +7,16 @@ AI 相关内容，如大模型、API 平台、AI IDE与插件等。
 
 <!-- more -->
 
-# 总览
+# AI
 
 ## 大模型
 
-**开源模型下载地址**
+**模型下载**
 
 * [HuggingFace](https://huggingface.co/)
 * [HuggingFace - 国内镜像](https://hf-mirror.com/)
 
-**大模型**
+**推理模型**
 
 * [Claude](https://www.anthropic.com/)
 * [DeepSeek](https://www.deepseek.com/)
@@ -29,7 +29,7 @@ AI 相关内容，如大模型、API 平台、AI IDE与插件等。
 * [Flux - Github](https://github.com/black-forest-labs/flux)
 * [Flux 官网](https://blackforestlabs.ai/)
 
-**文/图生模型**
+**图生模型**
 
 * [Tripo](https://www.tripo3d.ai/)
 * [Trellis3D](https://trellis3d.github.io/)

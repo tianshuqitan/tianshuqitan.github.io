@@ -1,5 +1,7 @@
 ---
 title: 面试
+index: false
+article: false
 ---
 
 Unity 面试常见问题与回答。

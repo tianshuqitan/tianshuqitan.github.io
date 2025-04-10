@@ -1,11 +1,9 @@
 ---
 title: Go
 article: false
+index: false
 ---
-
-Go 语言。
 
 <!-- more -->
 
-# Go
 

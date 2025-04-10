@@ -1,8 +1,11 @@
 ---
 title: List
+article: false
 ---
 
-# [List 源码](https://referencesource.microsoft.com/#mscorlib/system/collections/generic/list.cs)
+# List
+
+[源码](https://referencesource.microsoft.com/#mscorlib/system/collections/generic/list.cs)
 
 ```cs
 private T[] _items;
