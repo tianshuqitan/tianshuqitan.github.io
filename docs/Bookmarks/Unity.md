@@ -29,6 +29,15 @@ article: false
 * [Odin - 分组嵌套(Nesting Groups)](https://odin-faq.netlify.app/groups/nesting-groups/)
 * [DOTweenPro](https://dotween.demigiant.com/getstarted.php)
 * [DOTween - Github](https://github.com/Demigiant/dotween)
+* [Unity-UI-Extensions](https://github.com/Unity-UI-Extensions/com.unity.uiextensions)
+
+**Framework**
+
+* [Game Framework](https://gameframework.cn/)
+* [ET](https://github.com/egametang/ET)
+* [QFramework](https://github.com/liangxiegame/QFramework)
+* [MyUnityFrameWork](https://github.com/kisence-mian/MyUnityFrameWork)
+* [FairyGUI](https://github.com/fairygui/FairyGUI-unity)
 
 **资源查看**
 
