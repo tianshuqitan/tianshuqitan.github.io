@@ -33,11 +33,11 @@ Thumbs.db
 ## 同步到 Github
 
 1. 项目需要设置为 `public` `General/Danger Zone/Change Visibility`
-1. 项目需要设置为可读可写 `Actions/General/Workflow permissions/Read and write permissions`
-2. 创建 `GithubAction` `Pages/Github Actions/Create your own`
+2. 项目需要设置为可读可写 `Actions/General/Workflow permissions/Read and write permissions`
+3. 创建 `GithubAction` `Pages/Github Actions/Create your own`
    1. 会在 `.github\workflows\` 下创建文件，命名为 `docs.yml`
    2. 执行过一次之后，设置 `Deploy From a branch`，选择分支 `gh-pages`，目录选择根目录。
-3. 最终部署页面为 `https://{username}.github.io/{xxx}`
+4. 最终部署页面为 `https://{username}.github.io/{xxx}`
 
 > 最好是新建一个名为 `{username.github.io}` 的项目，即可以直接使用 `https://{Username}.github.io` 网址。
 
@@ -115,5 +115,5 @@ Error: No pnpm version is specified. Please specify it by one of the following w
 ## 参考
 
 * [github-pages](https://vuepress.vuejs.org/zh/guide/deployment.html#github-pages)
-* [azure-webapps-node.yml](/Attachment/azure-webapps-node.yml)
+* [azure-webapps-node.yml](./azure-webapps-node.yml)
 * [从零开始：VuePress2 + GitHub Pages 搭建你的第一个免费博客网站](https://zhuanlan.zhihu.com/p/672087461)

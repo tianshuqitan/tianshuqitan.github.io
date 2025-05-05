@@ -44,7 +44,7 @@ author: Unity Technologies
 
 ## GPU instancing
 
-[GPU 实例化](./GPU%20实例化.md)
+[GPU 实例化](./GPUInstancing.md)
 
 ## DrawCall 批处理
 
