@@ -1,5 +1,6 @@
 ---
 title: GPU 实例化
+article: false
 ---
 
 # GPU 实例化
@@ -47,7 +48,7 @@ Unity 对共享相同网格和材质的 GameObject 使用 GPU 实例化。要对
 
 要对材质使用 GPU 实例化，请在 Inspector 中选择 **Enable GPU Instancing** 选项。
 
-![](https:/docs.unity3d.com/cn/current/uploads/Main/enable-gpu-instancing-inspector.png)
+![](https://docs.unity3d.com/cn/current/uploads/Main/enable-gpu-instancing-inspector.png)
 > 材质 Inspector 中显示的 Enable GPU Instancing 选项。
 
 ### 光照

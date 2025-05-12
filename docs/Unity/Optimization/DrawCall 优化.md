@@ -1,8 +1,6 @@
 ---
-created: 2025-04-18T 00:08:22
-tags: []
-source: https://docs.unity3d.com/cn/current/Manual/optimizing-draw-calls.html
-author: Unity Technologies
+source: https://docs.unity3d.com/cn/2022.3/Manual/optimizing-draw-calls.html
+article: false
 ---
 
 # DrawCall 优化

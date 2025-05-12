@@ -3,6 +3,7 @@ created: 2025-04-13T 00:00:34
 tags: [Unity Connect]
 source: https://learn.unity.com/tutorial/optimizing-unity-ui
 author: Unity Technologies
+article: false
 ---
 
 # 优化 Unity UI
