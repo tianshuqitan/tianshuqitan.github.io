@@ -9,6 +9,8 @@ article: false
 
 # Unity UI 优化建议
 
+[原文地址 - UnityLearn](https://create.unity.com/Unity-UI-optimization-tips)
+
 本文汇集了提升 Unity UI 性能的最佳实践技巧。更多详细内容可参考 Unity 工程师 Ian Dundore 的精彩演讲 [Squeezing Unity: Tips for raising performance]（UI 优化部分从 23:38 开始）。
 ## 1. 合理划分 Canvas
 

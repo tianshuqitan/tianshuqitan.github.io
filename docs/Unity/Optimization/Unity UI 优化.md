@@ -1,12 +1,11 @@
 ---
-created: 2025-04-13T 00:00:34
-tags: [Unity Connect]
 source: https://learn.unity.com/tutorial/optimizing-unity-ui
-author: Unity Technologies
 article: false
 ---
 
 # 优化 Unity UI
+
+[原文地址 - UnityLearn](https://learn.unity.com/tutorial/optimizing-unity-ui)
 
 优化基于 Unity UI 的用户界面是一门艺术。本指南将讨论 Unity UI 的基本概念、底层算法和代码，以及常见问题和解决方案。
 

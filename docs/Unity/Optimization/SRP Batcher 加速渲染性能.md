@@ -5,7 +5,7 @@ article: false
 
 # SRP Batcher 加速渲染性能
 
-[原文地址](https://unity.com/blog/engine-platform/srp-batcher-speed-up-your-rendering)
+[原文地址 - UnityBlog](https://unity.com/blog/engine-platform/srp-batcher-speed-up-your-rendering)
 
 2018 年，我们推出了一种高度可定制的渲染技术，称为 [可编程渲染管线(SRP)](https://blog.unity.com/technology/srp-overview)。其中包含一个新的底层引擎渲染循环 SRP Batcher，可以将 CPU 渲染速度提升 1.2 到 4 倍(具体取决于场景)。让我们看看如何最好地使用这一功能！
 
