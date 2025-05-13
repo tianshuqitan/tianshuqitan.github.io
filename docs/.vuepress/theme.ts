@@ -30,7 +30,7 @@ export default hopeTheme({
     },
     // 显示页脚
     displayFooter: true,
-    footer: "Copyright © 2024 Mr.Chen",
+    // footer: "Copyright © 2024 Mr.Chen",
     // 页面元数据设置
     contributors: false,
     editLink: false,
