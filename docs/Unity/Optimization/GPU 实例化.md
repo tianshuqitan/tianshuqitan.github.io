@@ -1,6 +1,7 @@
 ---
-title: GPU 实例化
+source: https://docs.unity3d.com/2021.3/Documentation/Manual/GPUInstancing.html
 article: false
+index: false
 ---
 
 # GPU 实例化

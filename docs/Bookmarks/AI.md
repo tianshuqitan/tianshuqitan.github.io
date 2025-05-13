@@ -67,3 +67,7 @@ AI 相关内容，如大模型、API 平台、AI IDE与插件等。
 * [OpenPoseEditor](https://openposeai.com/)
 * [OpenPoseEditor - ZhuYu(推荐)](https://zhuyu1997.github.io/open-pose-editor/?lng=zh)
 * [LLM 3D 可视化](https://bbycroft.net/llm)
+
+## AI 翻译
+
+[吴恩达老师的反思式三步翻译法：AI 翻译 Prompt](https://blog.baduyifei.com/ai-translation-prompt/)

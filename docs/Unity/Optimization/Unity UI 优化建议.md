@@ -1,17 +1,13 @@
 ---
-created: 2025-04-12T 16:08:42
 tags:
   - 优化
   - UI
   - 官网
 source: https://create.unity.com/Unity-UI-optimization-tips
-author:
 article: false
 ---
 
 # Unity UI 优化建议
-
-[英文原文](./Original/SomeOfTheBestOptimizationTipsForUnityUI.md)
 
 本文汇集了提升 Unity UI 性能的最佳实践技巧。更多详细内容可参考 Unity 工程师 Ian Dundore 的精彩演讲 [Squeezing Unity: Tips for raising performance]（UI 优化部分从 23:38 开始）。
 ## 1. 合理划分 Canvas
@@ -70,7 +66,7 @@ _挑战在于并非所有 UI 元素都需要接收更新。_
 
 _如果在 World Space Canvas 上留空 Event Camera 字段，并不意味着你的 Canvas 不会接收事件。相反，它会使用游戏的主 Camera。_ 为了确定哪个 Camera 是主 Camera，它会访问 `Camera.main` 属性。
 
-![](./Assets/squeeze_Unity24.PNG)
+![](./Assets/squeeze_Unity24.png)
 
 _根据 Unity 采用的代码路径，每个 Graphic Raycaster、每个 World Space Canvas 每帧会访问 Camera.main 7-10 次。而 Camera.main 每次被访问时都会调用 Object.FindObjectWithTag！_ 显然，这在运行时不是好事。
 

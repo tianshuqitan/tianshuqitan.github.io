@@ -1,11 +1,14 @@
 ---
-source: https://docs.unity3d.com/cn/2022.3/Manual/optimizing-draw-calls.html
+source: https://docs.unity3d.com/2022.3/Documentation/Manual/optimizing-draw-calls.html
 article: false
 ---
 
 # DrawCall 优化
 
-要在屏幕上绘制几何体，Unity 会向图形 API 发出绘制调用。绘制调用告诉图形 API 要绘制什么以及如何绘制。每个绘制调用包含图形 API 在屏幕上绘制所需的所有信息，例如关于纹理(Textures)、着色器(Shaders)和缓冲区(Buffers)的信息。绘制调用(DrawCall)可能很耗费资源，但通常为绘制调用所做的准备工作比绘制调用本身更耗费资源。
+[原文地址 - UnityManual](https://docs.unity3d.com/2022.3/Documentation/Manual/optimizing-draw-calls.html)
+
+要在屏幕上绘制几何体，Unity 会向图形 API 发出绘制调用(Draw Call)。绘制调用告诉图形 API 要绘制什么以及如何绘制。每个绘制调用包含图形 API 在屏幕上绘制所需的所有信息，例如关于纹理(Textures)、着色器(Shaders)和缓冲区(Buffers)的信息。绘制调用(Draw Call)可能很耗费资源，但通常为绘制调用所做的准备工作比绘制调用本身更耗费资源。
+
 > 绘制的一般流程为：把数据加载到显存(手机无显卡，公用内存，没这一步) -> 设置渲染状态 -> 调用 DrawCall。
 
 为了准备绘制调用，CPU 会设置资源并更改 GPU 上的内部设置。这些设置统称为渲染状态(Render State)。**对渲染状态的更改（例如切换到不同的材质）是图形 API 执行的最耗费资源的操作**。
@@ -40,9 +43,9 @@ article: false
 
 如果您将 GameObject 标记为静态批处理并且 Unity 成功批处理它，Unity 会禁用该 GameObject 的 GPU instancing，即使渲染器使用实例化着色器也是如此。发生这种情况时，Inspector 窗口会显示一条警告消息，建议您禁用静态批处理。同样，如果 Unity 可以对网格使用 GPU instancing，Unity 会禁用该网格的动态批处理。
 
-## GPU instancing
+## GPU 实例化
 
-[GPU 实例化](./GPUInstancing.md)
+[GPU 实例化](./GPU%20实例化.md)
 
 ## DrawCall 批处理
 
