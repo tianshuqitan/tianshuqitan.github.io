@@ -367,32 +367,38 @@ export default hopeTheme({
 
 ### [Markdown](https://theme-hope.vuejs.press/zh/guide/markdown/intro.html)
 
-提示容器
+提示容器，可用字段 `important` `info` `note` `tip` `warning` `caution 自定义标题` `details 自定义标题`
 
+```
 :::important
 重要提示。
 :::
+```
+
+:::important
+important
+:::
 
 :::info
-信息提示。
+info
 :::
 
 :::note
-注释容器。
+note
 :::
 
 :::tip
-提示容器。
+tip
 :::
 
 :::warning
-警告容器。
+warning
 :::
 
 :::caution 自定义标题
-危险容器。
+caution 自定义标题
 :::
 
 :::details 自定义标题
-详情容器。
+details 自定义标题
 :::
