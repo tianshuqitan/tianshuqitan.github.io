@@ -4,15 +4,13 @@ order : 5
 article: false
 ---
 
-Vuepress ThemeHope 安装于配置。
-
 <!-- more -->
 
-# Hope 主题
+# ThemeHope
 
-## 链接
+## 官网
 
-* [官网](https://theme-hope.vuejs.press/zh/guide/)
+* [ThemeHope 官网](https://theme-hope.vuejs.press/zh/guide/)
 
 ## 安装
 
@@ -223,6 +221,37 @@ export default defineUserConfig({
 });
 ```
 
+示例 1 - 主题官网文档导航栏：
+
+```ts
+import { navbar } from "docs-shared";
+
+export const zhNavbarConfig = navbar([
+    "/zh/get-started/",
+    "/zh/guide/",
+    "/zh/config/",
+    "/zh/faq/",
+    "/zh/demo/",
+    {
+        text: "项目",
+        icon: "circle-info",
+        prefix: "/zh/",
+        children: [
+            {
+                text: "教程",
+                icon: "signs-post",
+                prefix: "cookbook/",
+                children: ["markdown/", "vuepress/"],
+            },
+            {
+                text: "项目",
+                children: ["changelog", "contribution"],
+            },
+        ],
+    },
+]);
+```
+
 :::tip
 我们推荐你省略 `.md` 扩展名，以 `/` 结尾的路径会被推断为 `/README.md`。
 :::
@@ -296,6 +325,63 @@ sidebar: {
 },
 ```
 
+示例1 - 主题官网文档侧边栏
+
+```ts
+import { sidebar } from "docs-shared";
+
+export const zhSidebarConfig = sidebar({
+  "/zh/": [
+    "",
+    "get-started/",
+    {
+      text: "指南",
+      icon: "lightbulb",
+      prefix: "guide/",
+      children: [
+        "intro/",
+        "interface/",
+        "layout/",
+        "markdown/",
+        "feature/",
+        "blog/",
+        "customize/",
+        "advanced/",
+      ],
+    },
+    {
+      text: "配置",
+      icon: "gears",
+      prefix: "config/",
+      children: [
+        "intro",
+        "i18n",
+        "theme/",
+        "plugins/",
+        "frontmatter/",
+        "style",
+      ],
+    },
+    {
+      text: "教程",
+      icon: "signs-post",
+      prefix: "cookbook/",
+      children: ["markdown/", "vuepress/"],
+    },
+    "demo/",
+    "faq/",
+    "changelog",
+    "contribution",
+  ],
+  "/zh/get-started/": "structure",
+  "/zh/guide/": "structure",
+  "/zh/config/": "structure",
+  "/zh/cookbook/": "structure",
+  "/zh/demo/": "structure",
+  "/zh/faq/": "structure",
+});
+```
+
 在页面的 `Frontmatter` 中通过 `index` 控制是否显示在侧边栏，通过 `order` 控制顺序。
 
 ### 页脚
@@ -319,16 +405,16 @@ export default hopeTheme({
 
 页面信息默认全局启用，同时支持页面配置。
 
-条目 | 对应内容 | 页面 `frontmatter` 值 | 主题设置的配置项
-:---|:------|:------------------|:---------
-"Author" | 作者 | **author** | author
-"Date" | 写作日期 | date | N/A
-"Original" | 是否原创 | isOriginal | N/A
-"Category" | 分类 | **category** | N/A
-"Tag" | 标签 | **tag** | N/A
-"ReadingTime" | 预计阅读时间 | N/A(自动生成) | N/A
-"Word" | 字数 | N/A(自动生成) | N/A
-"PageView" | 访问量 | pageview (仅 Waline 可用) | plugins.comment.pageview
+| 条目          | 对应内容     | 页面 `frontmatter` 值     | 主题设置的配置项         |
+| :------------ | :----------- | :------------------------ | :----------------------- |
+| "Author"      | 作者         | **author**                | author                   |
+| "Date"        | 写作日期     | date                      | N/A                      |
+| "Original"    | 是否原创     | isOriginal                | N/A                      |
+| "Category"    | 分类         | **category**              | N/A                      |
+| "Tag"         | 标签         | **tag**                   | N/A                      |
+| "ReadingTime" | 预计阅读时间 | N/A(自动生成)             | N/A                      |
+| "Word"        | 字数         | N/A(自动生成)             | N/A                      |
+| "PageView"    | 访问量       | pageview (仅 Waline 可用) | plugins.comment.pageview |
 
 ### 页面元数据
 

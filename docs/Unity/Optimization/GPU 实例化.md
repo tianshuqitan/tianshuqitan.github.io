@@ -1,12 +1,12 @@
 ---
-source: https://docs.unity3d.com/2021.3/Documentation/Manual/GPUInstancing.html
+source: https://docs.unity3d.com/2022.3/Documentation/Manual/GPUInstancing.html
 article: false
 index: false
 ---
 
 # GPU 实例化
 
-[原文地址 = UnityManual](https://docs.unity3d.com/2021.3/Documentation/Manual/GPUInstancing.html)
+[原文地址 - UnityManual](https://docs.unity3d.com/2022.3/Documentation/Manual/GPUInstancing.html)
 
 GPU instancing 是一种 DrawCall 优化方法，它使用相同的材质在单个绘制调用中渲染网格的多个副本。网格的每个副本称为一个实例。这对于绘制在场景中多次出现的内容很有用，例如树木或灌木。
 

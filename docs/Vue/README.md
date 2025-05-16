@@ -1,6 +1,5 @@
 ---
 title: Vue
-article: false
 ---
 
 <!-- more -->

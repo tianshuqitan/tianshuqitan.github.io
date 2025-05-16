@@ -1,6 +1,7 @@
 ---
 source: https://unity.com/blog/engine-platform/srp-batcher-speed-up-your-rendering
 article: false
+index: false
 ---
 
 # SRP Batcher 加速渲染性能

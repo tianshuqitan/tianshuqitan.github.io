@@ -1,6 +1,7 @@
 ---
 source: https://docs.unity3d.com/2022.3/Documentation/Manual/optimizing-draw-calls.html
 article: false
+index: false
 ---
 
 # DrawCall 优化
@@ -218,7 +219,7 @@ Unity 可以对阴影投射器使用动态批处理，即使它们的材质不�
 * 在创作网格时使用您的资产生成工具
 * 在 Unity 中使用 [Mesh.CombineMeshes]
 
-## SRP Batcher
+## [SRP Batcher](https://docs.unity3d.com/2022.3/Documentation/Manual/SRPBatcher.html)
 
 可编程渲染管线 (SRP) 批处理是一种 DrawCall 优化，可显著提高使用 SRP 的应用程序的性能。SRP 批处理器减少了 Unity 准备和分派使用相同着色器变体的材质的绘制调用所需的 CPU 时间。
 > 相同 Shader(或者变体) 但是材质不相同

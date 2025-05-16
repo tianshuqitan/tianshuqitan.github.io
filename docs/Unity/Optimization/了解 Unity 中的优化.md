@@ -1,13 +1,11 @@
 ---
-tags:
-  - 优化
-  - 官网
 article: false
+index: false
 ---
 
 # 了解 Unity 中的优化
 
-[原文地址 - UnityManual](https://docs.unity3d.com/cn/2021.3/Manual/BestPracticeUnderstandingPerformanceInUnity.html)
+[原文地址 - UnityManual](https://docs.unity3d.com/cn/2022.3/Manual/BestPracticeUnderstandingPerformanceInUnity.html)
 
 本最佳实践指南是 Unite Unity Europe 2016 讲座 `移动应用程序的优化(Optimizing Mobile Applications)` 的配套内容。涵盖了讲座的大部分内容，但也为感兴趣的读者额外补充了一些材料。可以通过 YouTube 观看讲座: [Unite 2016: 移动应用程序的优化 (Optimizing Mobile Applications)](https://www.youtube.com/watch?v=j4YAY36xjwE).
 

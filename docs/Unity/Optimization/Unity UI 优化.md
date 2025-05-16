@@ -1,6 +1,7 @@
 ---
 source: https://learn.unity.com/tutorial/optimizing-unity-ui
 article: false
+index: false
 ---
 
 # 优化 Unity UI
@@ -9,42 +10,42 @@ article: false
 
 优化基于 Unity UI 的用户界面是一门艺术。本指南将讨论 Unity UI 的基本概念、底层算法和代码，以及常见问题和解决方案。
 
-## 1. Unity UI 优化指南
+## Unity UI 优化指南
 
 优化基于 Unity UI 的用户界面是一门艺术。硬性规则很少见；相反，必须根据系统行为仔细评估每种情况。优化任何 Unity UI 时的核心矛盾是在绘制调用和批处理成本之间取得平衡。虽然可以使用一些常识性技术来减少其中一项，但复杂的 UI 必须做出权衡。
 
 然而，与其他领域的最佳实践一样，优化 Unity UI 的尝试应从性能分析开始。在尝试优化 Unity UI 系统之前，主要任务是找到观察到的性能问题的确切原因。Unity UI 用户通常会遇到四类问题：
 
-* 过度的 GPU 片段着色器使用（即填充率过度使用）
-* CPU 时间过多用于重建 Canvas 批处理
-* 过多的 Canvas 批处理重建（过度脏标记）
-* CPU 时间过多用于生成顶点（通常来自文本）
+* 过度的 GPU 片段着色器(fragment shader)利用率（即填充率(fill-rate)过度利用）
+* CPU 花费过多时间重建 Canvas 批处理
+* Canvas 批处理重建次数过多（过度脏标记(over-dirtying)）
+* CPU 花费过多时间生成顶点（通常来自文本）
 
 原则上可以创建一个性能受限于发送到 GPU 的绘制调用数量的 Unity UI。然而在实践中，任何因绘制调用而使 GPU 过载的项目更可能是受限于填充率过度使用。
 
 本指南将讨论 Unity UI 的基本概念、底层算法和代码，以及常见问题和解决方案。它分为五个章节：
 
-1. [Unity UI 基础](#2-unity-ui-基础) 章节定义了 Unity UI 特有的术语，并讨论了许多用于渲染 UI 的基本过程的细节，包括批处理几何体的构建。强烈建议读者从本章开始。
-2. [Unity UI 性能分析工具](#3-unity-ui-性能分析工具) 章节讨论使用开发者可用的各种工具收集性能分析数据。
-3. [填充率 Canvas 和输入](#4-填充率-canvas-和输入) 章节讨论提高 Unity UI 的 Canvas 和输入组件性能的方法。
-4. [UI 控件](#5-优化-ui-控件) 章节讨论 UI 文本、滚动视图和其他特定组件的优化，以及一些不适合其他地方的技巧。
-5. [其他技术和技巧](#6-其他-ui-优化技术和技巧) 章节讨论一些不适合其他地方的问题，包括 UI 系统中一些基本技巧和"陷阱"的解决方法。
+* [Unity UI 基础](#2-unity-ui-基础) 定义了 Unity UI 特有的术语，并讨论了许多用于渲染 UI 的基本过程的细节，包括批处理几何体的构建。强烈建议读者从本章开始。
+* [Unity UI 性能分析工具](#3-unity-ui-性能分析工具) 讨论使用开发者可用的各种工具收集性能分析数据。
+* [填充率、Canvas 和输入](#4-填充率-canvas-和输入) 讨论提高 Unity UI 的 Canvas 和输入组件性能的方法。
+* [UI 控件](#5-优化-ui-控件) 讨论 UI 文本、滚动视图和其他特定组件的优化，以及一些不适合其他地方的技巧。
+* [其他技术和技巧](#6-其他-ui-优化技术和技巧) 讨论一些不适合其他地方的问题，包括 UI 系统中一些基本技巧和"陷阱"的解决方法。
 
 **UI 源代码**
 
 请记住，Unity UI 的 Graphic 和 Layout 组件是完全开源的。它们的源代码可以在 [Unity-Technologies uGUI] 中找到。
 
-## 2. Unity UI 基础
+## Unity UI 基础
 
 理解组成 Unity UI 系统的不同部分很重要。有几个基本类和组件共同构成了这个系统。本章首先定义本系列文章中使用的许多术语，然后讨论 Unity UI 几个关键系统的底层行为。
 
 ### 术语
 
-* `Canvas` 是 Unity 的原生代码组件，被 Unity 的渲染系统用来提供分层的几何体，这些几何体将被绘制在游戏的世界空间中或之上。
+* `Canvas` 是 Unity 原生代码(native-code)组件，用于提供分层几何体，供 Unity 的渲染系统使用，这些几何体将被绘制在游戏的世界空间中或之上。
 
-  `Canvas` 负责将其组成的几何体组合成批处理，生成适当的渲染命令并将这些命令发送到 Unity 的图形系统。所有这些都是在原生 C++ 代码中完成的，称为重新批处理或批处理构建。当 Canvas 被标记为包含需要重新批处理的几何体时，Canvas 被认为是脏的。
+  `Canvas` 负责将其内的几何体组合成批处理，生成适当的渲染命令并将这些命令发送到 Unity 的图形系统。所有这些都是在原生 C++ 代码中完成的，称为重新批处理(Rebatch)或批处理构建(Batch Build)。当 Canvas 包含需要重新批处理的几何体时，该 Canvas 被认为是脏(Dirty)的。
 
-* `Geometry` 由 Canvas Renderer 组件提供给 Canvas。
+  `Geometry(几何体)` 由 Canvas Renderer 组件提供给 Canvas。
 
 * 子 Canvas(Sub-canvas) 只是嵌套在另一个 Canvas 组件中的 Canvas 组件。子 Canvas 将其子项与父项隔离；脏的子项不会强制父项重建其几何体，反之亦然。在某些边缘情况下这不成立，例如当父 Canvas 的变化导致子 Canvas 调整大小时。
 
@@ -54,21 +55,21 @@ article: false
 
 * `Graphic` 和 `Layout` 组件都依赖于 CanvasUpdateRegistry 类，该类在 Unity Editor 界面中不公开。这个类跟踪必须更新的 Layout 组件和 Graphic 组件的集合，并在它们关联的 Canvas 调用 willRenderCanvases 事件时根据需要触发更新。
 
-* `Layout` 和 `Graphic` 组件的更新称为重建。重建过程将在本文档后面详细讨论。
+* `Layout` 和 `Graphic` 组件的更新称为重建(Rebuild)。重建过程将在本文档后面详细讨论。
 
 ### 渲染细节
 
-在 Unity UI 中组合用户界面时，请记住 Canvas 绘制的所有几何体都将在 **透明队列** 中绘制。也就是说，Unity UI 生成的几何体将始终使用 alpha 混合 **从前到后** 绘制。从性能角度来看，需要记住的重要一点是，即使多边形完全被其他不透明多边形覆盖，从多边形光栅化的每个像素都将被采样。在移动设备上，这种高级别的过度绘制会迅速超过 GPU 的填充率能力。
+在 Unity UI 中组合用户界面时，请记住 Canvas 绘制的所有几何体都将在 **透明(Transparent)队列** 中绘制。也就是说，Unity UI 生成的几何体将始终以 alpha 混合从后向前绘制。从性能角度来看，需要记住的重要一点是，从多边形栅格化(Rasterized)的每个像素都将被采样，即使它完全被其他不透明多边形覆盖。在移动设备上，这种高水平的过度绘制(Overdraw)会迅速超出 GPU 的填充率容量。
 
-### 批处理(Batch)构建过程(Canvas)
+### Canvases 批处理(Batch)构建
 
-批处理构建过程是 Canvas 将其 UI 元素表示的网格组合并生成适当的渲染命令发送到 Unity 图形管道的过程。此过程的结果被缓存并重复使用，直到 Canvas 被标记为脏，这会在其组成的网格发生变化时发生。
+批处理构建过程是 Canvas 组合表示其 UI 元素的网格并生成适当的渲染命令发送到 Unity 图形管线的过程。此过程的结果会被缓存并重用，直到 Canvas 被标记为脏，这发生在对其组成网格之一进行更改时。
 
-Canvas 使用的网格取自附加到 Canvas 但不包含在任何子 Canvas 中的 Canvas Renderer 组件集合。
+Canvas 使用的网格取自附加到 Canvas 但不包含在任何 Sub-canvas 中的 Canvas Renderer 组件集。
 
-计算批处理需要按深度对网格进行排序，并检查它们是否有重叠、共享材质等。此操作是多线程的，因此其性能在不同 CPU 架构之间通常会有很大差异，特别是在移动 SoC（通常具有少量 CPU 核心）和现代桌面 CPU（通常具有 4 个或更多核心）之间。
+计算批处理需要按深度对网格进行排序，并检查它们是否存在重叠、共享材质等。此操作是多线程的，因此其性能在不同的 CPU 架构上通常会有很大差异，尤其是在移动 SoC（通常具有少量 CPU 内核）和现代桌面 CPU（通常具有 4 个或更多内核）之间。
 
-**重建(Rebuild)过程(Graphic)**
+### Graphics 重建(Rebuild)
 
 重建过程是重新计算 Unity UI 的 C# Graphic 组件的布局和网格的地方。这是在 CanvasUpdateRegistry 类中执行的。请记住，这是一个 C# 类，其源代码可以在 [Unity-Technologies uGUI] 上找到。
 
@@ -76,9 +77,9 @@ Canvas 使用的网格取自附加到 Canvas 但不包含在任何子 Canvas 中
 
 `PerformUpdate` 运行过程分为三步：
 
-* 脏的 Layout 组件被要求通过 [ICanvasElement.Rebuild] 方法重建它们的布局。
-* 任何已注册的 Clipping 组件（如 Mask）被要求剔除任何被剪裁的组件。这是通过 `ClippingRegistry.Cull` 完成的。
-* 脏的 Graphic 组件被要求重建它们的图形元素。
+* 通过 [ICanvasElement.Rebuild] 方法请求脏的 Layout 组件重建其布局。
+* 请求任何注册的 Clipping 组件（例如 Masks）剔除任何被裁剪的组件。这是通过 `ClippingRegistry.Cull` 完成的。
+* 请求脏的 Graphic 组件重建其图形元素。
 
 ```cs
 // CanvasUpdateRegistry.cs
@@ -88,13 +89,11 @@ private void PerformUpdate()
     CleanInvalidItems();
 
     m_PerformingLayoutUpdate = true;
-
     m_LayoutRebuildQueue.Sort(s_SortLayoutFunction);
-
+    // 对需要 Rebuild 的 Layout 组件执行 Rebuild
     for (int i = 0; i <= (int)CanvasUpdate.PostLayout; i++)
     {
         UnityEngine.Profiling.Profiler.BeginSample(m_CanvasUpdateProfilerStrings[i]);
-
         for (int j = 0; j < m_LayoutRebuildQueue.Count; j++)
         {
             var rebuild = m_LayoutRebuildQueue[j];
@@ -119,13 +118,14 @@ private void PerformUpdate()
     UISystemProfilerApi.EndSample(UISystemProfilerApi.SampleType.Layout);
     UISystemProfilerApi.BeginSample(UISystemProfilerApi.SampleType.Render);
 
-    // now layout is complete do culling...
+    // 对 Clipping 组件执行 Cull
     UnityEngine.Profiling.Profiler.BeginSample(m_CullingUpdateProfilerString);
     ClipperRegistry.instance.Cull();
     UnityEngine.Profiling.Profiler.EndSample();
 
     m_PerformingGraphicUpdate = true;
 
+    // 对 Dirty 的 Graphic 执行 Rebuild
     for (var i = (int)CanvasUpdate.PreRender; i < (int)CanvasUpdate.MaxUpdateValue; i++)
     {
         UnityEngine.Profiling.Profiler.BeginSample(m_CanvasUpdateProfilerStrings[i]);
@@ -168,15 +168,47 @@ public enum CanvasUpdate
 }
 ```
 
-### Layout 重建
+#### Layout 重建
 
-要重新计算一个或多个 Layout 组件中包含的组件的适当位置（和潜在大小），需要按它们在 GameObject 层次结构中的适当层次顺序应用 Layout。层次结构中更靠近根部的 Layout 可能会改变嵌套在其中的任何 Layout 的位置和大小，因此必须首先计算。
+要重新计算包含在一个或多个 Layout 组件中的组件的适当位置（以及可能的大小），需要按照其适当的层次结构顺序应用 Layouts。GameObject 层次结构中更靠近根的 Layouts 可能会改变嵌套在其内部的任何 Layouts 的位置和大小，因此必须首先计算它们。
 
-为此，Unity UI 按它们在层次结构中的深度对脏的 Layout 组件列表进行排序。层次结构中较高的项（即父 Transform 较少的项）被移到列表的前面。
+为此，Unity UI 按其在层次结构中的深度对脏的 Layout 组件列表进行排序。层次结构中较高的项目（即具有较少父 Transforms 的项目）被移到列表的前面。
 
-然后，排序后的 Layout 组件列表被要求重建它们的布局；这是实际改变由 Layout 组件控制的 UI 元素位置和大小的部分。有关单个元素的位置如何受 Layout 影响的更多细节，请参阅 Unity 手册中的 [UI Auto Layout] 部分。
+> Layout 组件可能会改变其子对象的位置和大小，因此越靠近顶层的越应该首先计算。这里按照父节点数量进行的排序。
 
-### Graphic 重建
+```cs
+private static int SortLayoutList(ICanvasElement x, ICanvasElement y)
+{
+    Transform t1 = x.transform;
+    Transform t2 = y.transform;
+
+    return ParentCount(t1) - ParentCount(t2);
+}
+```
+
+然后对排序后的 Layout 组件列表执行 Rebuild，重建布局；Rebuild 才是实际更改由 Layout 组件控制的 UI 元素的位置和大小的地方。 有关单个元素的位置如何受 Layouts 影响的更多详细信息，请参阅 Unity 手册的 [UI Auto Layout] 部分。
+
+```cs
+// LayoutRebuilder.cs
+public void Rebuild(CanvasUpdate executing)
+{
+    switch (executing)
+    {
+        case CanvasUpdate.Layout:
+            // It's unfortunate that we'll perform the same GetComponents querys for the tree 2 times,
+            // but each tree have to be fully iterated before going to the next action,
+            // so reusing the results would entail storing results in a Dictionary or similar,
+            // which is probably a bigger overhead than performing GetComponents multiple times.
+            PerformLayoutCalculation(m_ToRebuild, e => (e as ILayoutElement).CalculateLayoutInputHorizontal());
+            PerformLayoutControl(m_ToRebuild, e => (e as ILayoutController).SetLayoutHorizontal());
+            PerformLayoutCalculation(m_ToRebuild, e => (e as ILayoutElement).CalculateLayoutInputVertical());
+            PerformLayoutControl(m_ToRebuild, e => (e as ILayoutController).SetLayoutVertical());
+            break;
+    }
+}
+```
+
+#### Graphic 重建
 
 当 Graphic 组件被重建时，Unity UI 将控制权传递给 [ICanvasElement] 接口的 [Rebuild] 方法。Graphic 实现这一点，并在重建过程的 `PreRender` 阶段运行两个不同的重建步骤。
 
@@ -209,7 +241,7 @@ public virtual void Rebuild(CanvasUpdate update)
 
 Graphic 重建不会以任何特定顺序遍历 Graphic 组件列表，也不需要任何排序操作。
 
-## 3. Unity UI 性能分析工具
+## Unity UI 性能分析工具
 
 有几个性能分析工具可用于分析 Unity UI 的性能。关键工具是：
 
@@ -218,7 +250,7 @@ Graphic 重建不会以任何特定顺序遍历 Graphic 组件列表，也不需
 * Xcode 的 Instruments 或 Intel VTune
 * Xcode 的 Frame Debugger 或 Intel GPA
 
-外部工具提供方法级 CPU 分析，具有毫秒（或更好）分辨率，以及详细的绘制调用和着色器分析。设置和使用上述工具的说明超出了本指南的范围。请注意，XCode Frame Debugger 和 Instruments 仅适用于 Apple 平台的 IL2CPP 构建，因此目前只能用于分析 iOS 构建。
+外部工具提供方法级 CPU 分析，具有毫秒（或更好）分辨率，以及详细的绘制调用和着色器分析。设置和使用上述工具的说明超出了本指南的范围。请注意，XCode Frame Debugger 和 Instruments 仅适用于 Apple 平台的 IL2CPP 构建，因此目前只能用于分析 IOS 构建。
 
 ### Unity Profiler
 
@@ -329,7 +361,7 @@ Xcode 的 Frame Debugger 可以通过单击 GPU 分析器底部隐藏的小 `Cam
 
 Unity UI 仅生成四边形，因此顶点着色器不太可能给 GPU 的 tiler 管道带来压力。出现在此着色器通道中的任何问题可能是由于填充率问题。
 
-### 分析分析器(profiler)结果
+### 分析分析器(Profiler)结果
 
 收集分析数据后，可能会得出几个结论。如果 `Canvas.BuildBatch` 或 `Canvas::UpdateBatches` 似乎使用了过多的 CPU 时间，那么可能的问题是在单个 Canvas 上有过多的 Canvas Renderer 组件。请参阅 [Canvas 步骤中的拆分 Canvas](#拆分-canvas) 部分。
 
@@ -345,9 +377,7 @@ Unity UI 仅生成四边形，因此顶点着色器不太可能给 GPU 的 tiler
 
 如果在 `Canvas.SendWillRenderCanvases` 中没有特定的热点，或者它似乎每帧都在运行，则问题可能是动态元素与静态元素分组在一起，并强制整个 Canvas 过于频繁地重建。请参阅[拆分 Canvas](#拆分-canvas) 步骤。
 
-## 4. 填充率 Canvas 和输入
-
-本章讨论构建 Unity UI 的更广泛问题。
+## 填充率、Canvas 和输入
 
 ### 修复填充率问题
 
@@ -360,21 +390,28 @@ Unity UI 仅生成四边形，因此顶点着色器不太可能给 GPU 的 tiler
 
 为了缓解填充率过度使用并减少过度绘制，请考虑以下可能的修复方法。
 
+* [消除不可见 UI](#消除不可见-ui)
+* [简化 UI 结构](#简化-ui-结构)
+* [禁用不可见的相机输出](#禁用不可见的相机输出)
+* [大部分被遮挡的相机](#大部分被遮挡的相机)
+* [基于组合的 UI](#基于组合的-ui)
+* [UI 着色器和低规格设备](#ui-着色器和低规格设备)
+
 #### 消除不可见 UI
 
-需要最少重新设计现有 UI 元素的方法是简单地禁用对玩家不可见的元素。这种情况最常见的应用是打开具有不透明背景的全屏 UI。在这种情况下，可以禁用放置在全屏 UI 下方的任何 UI 元素。
+禁用对玩家不可见的元素。最常见的适用情况是打开具有不透明背景的全屏 UI。在这种情况下，可以禁用放置在全屏 UI 下方的所有 UI 元素。
 
 最简单的方法是禁用包含不可见 UI 元素的根 GameObject 或 GameObjects。有关替代解决方案，请参阅 [禁用 Canvas](#禁用-canvas) 部分。
 
-最后，确保没有通过将其 alpha 设置为 0 来隐藏 UI 元素，因为该元素仍将被发送到 GPU 并可能占用宝贵的渲染时间。如果 UI 元素不需要 Graphic 组件，可以简单地移除它，射线检测仍将工作。
+最后，确保没有通过将其 Alpha 设置为 0 来隐藏 UI 元素，因为该元素仍将被发送到 GPU 并可能占用宝贵的渲染时间。如果 UI 元素不需要 Graphic 组件，可以简单地移除它，射线检测仍将工作。
 
 #### 简化 UI 结构
 
-为了减少重建和渲染 UI 所需的时间，保持 UI 对象数量尽可能少非常重要。尽可能多地烘焙内容。例如，不要使用混合的 GameObject 只是为了改变元素的色调，而是通过材质属性来实现。此外，不要创建仅用于组织场景而没有其他目的的 **文件夹** 游戏对象。
+为了减少重建和渲染 UI 所需的时间，应该将 UI 对象的数量保持在尽可能低的水平。尽量多地烘焙(bake)东西。例如，不要仅仅为了改变元素的色调而使用混合的 GameObject，而是通过材质属性来完成。此外，不要创建像文件夹一样且除了组织场景之外没有其他用途的游戏对象。
 
 #### 禁用不可见的相机输出
 
-如果打开具有不透明背景的全屏 UI，世界空间相机仍将渲染标准 3D 场景在 UI 后面。渲染器不知道全屏 Unity UI 将遮挡整个 3D 场景。
+如果打开具有不透明背景的全屏 UI，世界空间相机仍将渲染 UI 后面的标准 3D 场景。渲染器不知道全屏 Unity UI 将遮挡整个 3D 场景。
 
 因此，如果打开完全全屏的 UI，禁用任何和所有被遮挡的世界空间相机将通过简单地消除渲染无用 3D 世界的工作来帮助减少 GPU 压力。
 
@@ -489,20 +526,24 @@ Shader "UI/Fast-Default"
 
 要显示任何 UI，UI 系统必须为屏幕上表示的每个 UI 组件构建几何体。这包括运行动态布局代码，生成表示 UI 文本字符串中字符的多边形，并将尽可能多的几何体合并到单个网格中以最小化绘制调用。这是一个多步骤的过程，在本指南开头的 [基础](#2-unity-ui-基础) 部分中有详细描述。
 
-Canvas 重建可能由于两个主要原因成为性能问题：
+Canvas 重建可能成为性能问题，主要有两个原因：
 
-* 如果 Canvas 上可绘制的 UI 元素数量很大，则计算批处理本身变得非常昂贵。这是因为对元素进行排序和分析的成本随着 Canvas 上可绘制 UI 元素的数量增长而超线性增长。
-* 如果 Canvas 被频繁标记为脏，则可能花费过多时间刷新变化相对较少的 Canvas。
+* 如果 Canvas 上可绘制的 UI 元素数量很大，则计算批处理本身变得非常昂贵。这是因为对元素进行排序和分析的成本与 Canvas 上可绘制 UI 元素的数量呈非线性增长。
+* 如果 Canvas 频繁变脏，则可能会花费过多的时间刷新更改相对较少的 Canvas。
 
-重要提醒：每当给定 Canvas 上的任何可绘制 UI 元素发生变化时，Canvas 必须重新运行批处理构建过程。此过程重新分析 Canvas 上的每个可绘制 UI 元素，无论它是否已更改。请注意，"变化"是影响 UI 对象外观的任何变化，包括分配给精灵渲染器的精灵、变换位置和比例、文本网格中包含的文本等。
+随着 Canvas 上元素数量的增加，这两个问题都趋于变得严重。
+
+:::important
+每当给定 Canvas 上的任何可绘制 UI 元素发生变化时，Canvas 都必须重新运行批处理构建过程。此过程会重新分析 Canvas 上的每个可绘制 UI 元素，无论它是否已更改。请注意，"更改" 是指影响 UI 对象外观的任何更改，包括分配给精灵渲染器的精灵、变换位置和缩放、文本网格中包含的文本等。
+:::
 
 #### Child 顺序
 
-Unity UI 是从后到前构建的，对象在层次结构中的顺序决定了它们的排序顺序。层次结构中较早的对象被认为在层次结构中较晚的对象后面。批处理是通过从上到下遍历层次结构并收集所有使用相同材质、相同纹理且没有中间层的对象来构建的。"中间层" 是具有不同材质的图形对象，其边界框重叠两个其他可批处理对象，并放置在层次结构中这两个可批处理对象之间。中间层强制批处理中断。
+Unity UI 从后向前构建，对象的层次结构顺序决定了它们的排序顺序。层次结构中较早的对象被认为在层次结构中较晚的对象后面。批处理通过自上而下遍历层次结构并收集所有使用相同材质、相同纹理且没有中间层的对象来构建。"中间层" 是指具有不同材质的图形对象，其边界框与两个原本可批处理的对象重叠，并且放置在层次结构中两个可批处理对象之间。中间层强制批处理中断。
 
-如 Unity UI 分析工具步骤中所述，UI 分析器和帧调试器可用于检查 UI 中的中间层。这是一种情况，其中一个可绘制对象插入两个其他可批处理对象之间。
+如 Unity UI 分析工具步骤中所述，UI Profiler 和 Frame Debugger 可用于检查 UI 中的中间层。这是指一个可绘制对象插入到两个其他原本可批处理的可绘制对象之间的情况。
 
-这个问题最常见于文本和精灵彼此靠近时：文本的边界框可以不可见地重叠附近的精灵，因为文本字形的多边形大部分是透明的。这可以通过两种方式解决：
+这个问题最常发生在文本和精灵彼此靠近时：文本的边界框可以无形地与附近的精灵重叠，因为文本字形的大部分多边形是透明的。这可以通过两种方式解决：
 
 * 重新排序可绘制对象，使可批处理对象不被不可批处理对象插入；也就是说，将不可批处理对象移动到可批处理对象之上或之下。
 * 调整对象的位置以消除不可见的重叠空间。
@@ -521,17 +562,17 @@ Unity UI 是从后到前构建的，对象在层次结构中的顺序决定了�
 
 **一般准则**
 
-由于 Canvas 在任何其组成的可绘制组件发生变化时都会重新批处理，通常最好将任何非平凡的 Canvas 至少分成两部分。此外，最好尝试将预期同时变化的元素共置在同一 Canvas 上。一个例子可能是进度条和倒计时计时器。这两者都依赖于相同的基础数据，因此将需要同时更新，因此它们应放置在同一 Canvas 上。
+由于 Canvas 在其任何组成可绘制组件发生变化时都会重新批处理，因此通常最好将任何非平凡的 Canvas 拆分为至少两个部分。此外，如果元素预计会同时更改，最好尝试将元素放在同一个 Canvas 上。一个例子可能是进度条和倒计时计时器。它们都依赖于相同的底层数据，因此需要同时更新，因此应将它们放在同一个 Canvas 上。
 
-在一个 Canvas 上，放置所有静态和不变的元素，例如背景和标签。这些将在 Canvas 首次显示时批处理一次，之后不再需要重新批处理。
+在一个 Canvas 上，放置所有静态且不变的元素，例如背景和标签。这些元素将在 Canvas 首次显示时批处理一次，之后将不再需要重新批处理。
 
-在第二个 Canvas 上，放置所有"动态"元素 - 那些频繁变化的元素。这将确保此 Canvas 主要重新批处理脏元素。如果动态元素数量变得非常多，可能需要将动态元素进一步细分为一组不断变化的元素（例如进度条、计时器读数、任何动画）和一组仅偶尔变化的元素。
+在第二个 Canvas 上，放置所有 "动态" 元素——那些频繁更改的元素。这将确保此 Canvas 主要重新批处理脏元素。如果动态元素数量变得非常大，可能需要进一步将动态元素细分为一组不断变化的元素（例如，进度条、计时器读数、任何动画）和一组仅偶尔更改的元素。
 
-这实际上在实践中相当困难，特别是在将 UI 控件封装到预制件中时。许多 UI 改为选择通过将成本较高的控件拆分到子 Canvas 上来细分 Canvas。
+这在实践中实际上相当困难，尤其是在将 UI 控件封装到预制件(Prefabs)中时。许多 UI 转而选择通过将成本较高的控件拆分到 Sub-canvas 上来细分 Canvas。
 
 **Unity 5.2 和优化批处理**
 
-在 Unity 5.2 中，批处理代码被大幅重写，与 Unity 4.6、5.0 和 5.1 相比性能显著提高。此外，在具有多个核心的设备上，Unity UI 系统会将大部分处理移动到工作线程。一般来说，Unity 5.2 减少了对将 UI 积极拆分为数十个子 Canvas 的需求。移动设备上的许多 UI 现在可以用两到三个 Canvas 实现良好的性能。
+在 Unity 5.2 中，批处理代码进行了实质性重写，与 Unity 4.6、5.0 和 5.1 相比，性能显著提高。此外，在具有多个核心的设备上，Unity UI 系统将把大部分处理转移到工作线程。总的来说，Unity 5.2 减少了将 UI 积极拆分为数十个 Sub-canvases 的需求。现在，许多移动设备上的 UI 可以通过少至两三个 Canvases 来实现高性能。
 
 ### Unity UI 中的输入和射线检测
 
@@ -549,15 +590,15 @@ Unity UI 是从后到前构建的，对象在层次结构中的顺序决定了�
 
 #### 射线检测优化
 
-Graphic Raycaster 是一个相对简单的实现，它遍历所有将 `Raycast Target` 设置设置为 true 的 Graphic 组件。对于每个 Raycast Target，Raycaster 执行一组测试。如果 Raycast Target 通过所有测试，则将其添加到命中列表中。
+Graphic Raycaster 是一个相对简单的实现，它遍历所有将 `Raycast Target` 设置设置为 true 的 Graphic 组件。对于每个 Raycast Target，Raycaster 执行一组测试。如果 Raycast Target 通过了所有测试，则将其添加到命中列表中。
 
 **射线检测实现细节**
 
 * 如果 Raycast Target 处于活动状态、已启用并且被绘制（即有几何体）
 * 如果输入点位于 Raycast Target 附加到的 RectTransform 内
-* 如果 Raycast Target 具有或是在任何深度的子级任何 [ICanvasRaycastFilter] 组件，并且该 Raycast Filter 组件允许 Raycast。
+* 如果 Raycast Target 具有或是一个 [ICanvasRaycastFilter] 组件的子级（任何深度），并且该 Raycast Filter 组件允许射线投射。
 
-然后按深度对命中的 Raycast Target 列表进行排序，过滤反向目标，并过滤以确保移除在相机后面渲染的元素（即在屏幕中不可见）。
+然后按深度对命中 Raycast Targets 列表进行排序，过滤掉反向目标，并过滤掉渲染在相机后面（即屏幕上不可见）的元素。
 
 Graphic Raycaster 还可以将射线投射到 3D 或 2D 物理系统中，如果在 Graphic Raycaster 的 `Blocking Objects` 属性上设置了相应的标志。
 
@@ -573,19 +614,19 @@ Graphic Raycaster 还可以将射线投射到 3D 或 2D 物理系统中，如果
 
 **层次深度和射线检测过滤器**
 
-每个 Graphic Raycast 在搜索射线检测过滤器时会一直遍历 Transform 层次结构到根节点。此操作的成本与层次结构的深度成线性比例增长。必须测试在层次结构中每个 Transform 上找到的所有组件，以查看它们是否实现了 [ICanvasRaycastFilter]，因此这不是一个廉价的操作。
+每个 Graphic Raycast 在搜索射线投射过滤器时都会遍历 Transform 层次结构一直到根部。此操作的成本与层次结构的深度呈线性增长。必须测试在层次结构中附加到每个 Transform 的所有组件，以查看它们是否实现了 [ICanvasRaycastFilter]，因此这不是一个廉价的操作。
 
 **子 Canvas 和 OverrideSorting 属性**
 
 子 Canvas 上的 [overrideSorting] 属性将导致 Graphic Raycast 测试停止爬升变换层次结构。如果可以在不引起排序或射线检测问题的情况下启用它，则应使用它来减少射线检测层次遍历的成本。
 
-## 5. 优化 UI 控件
+## 优化 UI 控件
 
-本优化 Unity UI 指南的这一部分重点讨论特定类型 UI 控件的问题。虽然大多数 UI 控件在性能方面相对相似，但有两个突出表现为接近可发布状态的游戏中遇到的许多性能问题的原因。
+特定类型的 UI 控件的优化问题。虽然大多数 UI 控件在性能方面相对相似，但有两个控件是许多在接近可发布状态的游戏中遇到的性能问题的根源。
 
 ### UI 文本
 
-Unity 内置的 Text 组件是在 UI 中显示光栅化文本字形的便捷方式。然而，有许多行为并不常见，但经常表现为性能热点。在向 UI 添加文本时，请始终记住文本字形实际上是作为单独的四边形呈现的，每个字符一个。这些四边形往往有大量围绕字形的空白空间，具体取决于其形状，并且很容易将文本定位在无意中破坏其他 UI 元素批处理的位置。
+Unity 的内置 Text 组件是在 UI 中显示栅格化文本字形的便捷方式。然而，有一些行为并不为人所知，但经常作为性能热点出现。向 UI 添加文本时，请始终记住文本字形实际上是作为单个四边形渲染的，每个字符一个。这些四边形周围往往有大量的空白空间，具体取决于其形状，并且很容易以一种无意中破坏其他 UI 元素批处理的方式定位文本。
 
 **文本网格重建**
 
@@ -733,7 +774,7 @@ TextMesh Pro 的字体资源在场景或项目中引用时加载。它们主要�
 
 自定义 Layout Group 可以分析底层源数据以检查必须显示多少数据元素，并适当调整 Scroll View 的 Content RectTransform 大小。然后它可以订阅 [Scroll View change events] 并使用这些事件相应地重新定位其可见元素。
 
-## 6. 其他 UI 优化技术和技巧
+## 其他 UI 优化技术和技巧
 
 有时就是没有干净的方法来优化 UI。本节包含一些可能有助于提高 UI 性能的建议，但有些在结构上"不干净"，可能难以维护，或者可能有丑陋的副作用。其他可能是 UI 中旨在简化初始开发的行为的解决方法，但也使得相对简单地创建性能问题。
 
@@ -764,7 +805,7 @@ RectTransform 的大小和位置计算将由 Transform 系统本身在本机代�
 
 ### 分配事件相机
 
-如果将 Canvas 设置为 `World Space` 或 `Screen Space - Camera` 模式并使用 Unity 的内置 Input Managers，则始终设置 Event Camera 或 Render Camera 属性非常重要。从脚本中，这始终作为 [worldCamera] 属性公开。
+如果将 Canvas 设置为 `World Space` 或 `Screen Space - Camera` 模式并使用 Unity 的内置 Input Managers，则务必始终设置 Event Camera 或 Render Camera 属性。从脚本中，这始终作为 [worldCamera] 属性公开。
 
 如果未设置此属性，则 Unity UI 将通过查找带有 Main Camera 标签的 GameObject 上的 Camera 组件来搜索主相机。此查找将针对每个 `World Space` 或 Camera Space Canvas 至少发生一次。由于 [GameObject.FindWithTag] 已知很慢，强烈建议所有 World Space 和 Camera Space Canvas 在设计时或初始化时分配其 Camera 属性。
 
@@ -772,9 +813,14 @@ RectTransform 的大小和位置计算将由 Transform 系统本身在本机代�
 
 ### UI 源代码定制
 
-UI 系统设计用于支持大量用例。这种灵活性很好，但也意味着一些优化在不破坏其他功能的情况下不容易完成。如果最终处于可以通过更改 C# UI 源代码获得一些 CPU 周期的情况，可以重新编译 UI DLL 并覆盖 Unity 附带的 DLL。
+UI 系统旨在支持大量用例。这种灵活性非常棒，但也意味着一些优化无法在不破坏其他功能的情况下轻松完成。如果您最终遇到可以通过更改 C# UI 源代码来获得一些 CPU 周期的情境，则可以重新编译 UI DLL 并覆盖 Unity 附带的 DLL。
 
-这应该只作为最后的手段，因为有一些重要的缺点。首先，必须找到一种方法将此新 DLL 分发给开发人员和构建机器。然后，每次升级 Unity 时，必须将更改与新 UI 源代码合并。在走这条路之前，请确保不能只是扩展现有类或编写自己的组件版本。
+但这应该只作为最后的手段，因为存在一些重要的缺点。首先，您必须找到一种方法将此新 DLL 分发给您的开发人员和构建机器。然后，每次升级 Unity 时，都必须将您的更改与新的 UI 源代码合并。在没有办法通过现有类或者编写自己的组件版本达成目的的情况下，再考虑更改源代码。
+
+### 其他优化建议
+
+[其他优化建议](./Unity%20UI%20优化建议.md)
+<!-- [](Unity%20UI%20优化建议.md) -->
 
 [Font.characterInfo]: http://docs.unity3d.com/ScriptReference/Font-characterInfo.html
 [Font.RequestCharactersInTexture]: http://docs.unity3d.com/ScriptReference/Font.RequestCharactersInTexture.html
