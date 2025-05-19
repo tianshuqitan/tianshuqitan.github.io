@@ -10,6 +10,7 @@ export const sidebarConfig = sidebar({
     "/Language/": "structure",
     "/Unity/": [
         "RoadMap/",
+        "Manual/",
         "Optimization/",
     ],
 });
