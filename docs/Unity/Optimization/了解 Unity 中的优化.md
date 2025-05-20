@@ -14,7 +14,7 @@ index: false
 
 ## [资源审核](https://docs.unity3d.com/cn/2021.3/Manual/BestPracticeUnderstandingPerformanceInUnity4.html)
 
-实际项目中发现的许多问题都是源自无心之过：临时的 _测试_ 更改和疲惫不堪的开发人员的误点击可能会暗地里添加性能不良的资源或更改现有资源的导入设置。
+实际项目中发现的许多问题都是源自无心之过：临时的 *测试* 更改和疲惫不堪的开发人员的误点击可能会暗地里添加性能不良的资源或更改现有资源的导入设置。
 
 对于任何大规模的项目，最好是将防止人为错误作为第一道防线。编写一小段代码来禁止将 4K 未压缩纹理添加到项目中，是相对简单的事情。
 
@@ -31,9 +31,9 @@ Unity Editor 中的 `AssetPostprocessor` 类可用于在 Unity 项目上强制�
 * `OnPreprocessAnimation`
 * `OnPreprocessAudio`
 
-请参阅 [AssetPostprocessor](https://docs.unity3d.com/cn/2021.3/ScriptReference/AssetPostprocessor.html) 的脚本参考，了解更多可能的 `OnPreprocess` 方法.
+请参阅 [AssetPostprocessor](https://docs.unity3d.com/cn/2022.3/ScriptReference/AssetPostprocessor.html) 的脚本参考，了解更多可能的 `OnPreprocess` 方法.
 
-```csharp
+```cs
 public class ReadOnlyModelPostprocessor : AssetPostprocessor
 {
    public void OnPreprocessModel()
@@ -54,7 +54,7 @@ public class ReadOnlyModelPostprocessor : AssetPostprocessor
 
 请注意，调用 `SaveAndReimport` 会导致再次调用此代码片段！但是，因为现在已确保 `isReadable` 为 false，所以此代码不会产生无限的重新导入循环。
 
-此变更的原因将在下面的"模型"部分讨论.
+此变更的原因将在下面的 "模型" 部分讨论。
 
 以下是较为通用的资源规则。
 
@@ -90,7 +90,7 @@ public class ReadOnlyModelPostprocessor : AssetPostprocessor
 
 模型的 `Read/Write enabled` 标志与纹理的上述相应标志具有相同的工作原理。但是，模型在默认情况下会启用该标志。
 
-如果项目在运行时通过脚本修改网格 (Mesh)，或者如果网格用作 `MeshCollider` 组件的基础，则 Unity 会要求启用此标志. 如果模型未在 `MeshCollider` 中使用并且未被脚本操纵，请禁用此标志以节省一半模型内存。
+如果项目在运行时通过脚本修改网格 (Mesh)，或者如果网格用作 `MeshCollider` 组件的基础，则 Unity 会要求启用此标志。如果模型未在 `MeshCollider` 中使用并且未被脚本操纵，请禁用此标志以节省一半模型内存。
 
 2. **在非角色模型上禁用骨架(Animator)**
 

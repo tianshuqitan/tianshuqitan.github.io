@@ -13,15 +13,15 @@ index: false
 Unity 使用三个内存管理层来处理应用程序中的内存：
 
 * [托管内存(Managed memory)](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-memory-overview.html#managed-memory)：一个受控的内存层，使用托管堆和 [垃圾回收器](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)) 来自动分配和指派内存。
-* [C# 非托管内存(C# unmanaged memory)](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-memory-overview.html#unmanaged-memory)：可以结合 Unity Collections 命名空间和包(package)使用的内存管理层。这种内存类型被称为 "非托管"，因为它不使用 [垃圾回收器](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-garbage-collector.html) 来管理未使用的内存部分。
+* [C# 非托管内存(C# unmanaged memory)](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-memory-overview.html#unmanaged-memory)：可以在 C# 下与 Unity Collections 命名空间和包(package)结合使用的内存管理层。这种内存类型被称为 "非托管"，因为它不使用 [垃圾回收器](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-garbage-collector.html) 来管理未使用的内存部分。
 * [原生内存(Native memory)](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-memory-overview.html#native-memory)：Unity 用于运行引擎的 C++ 内存。在大多数情况下，Unity 用户无法访问此内存，但如果您想微调应用程序性能的某些方面，了解它会很有用。
 
 **托管内存**
 
 [Mono 和 IL2CPP 的](https://docs.unity3d.com/2022.3/Documentation/Manual/scripting-backends.html) 脚本虚拟机(VM) 实现了 **托管内存** 系统，有时也称为脚本内存系统。这些 VM 提供了一个受控的内存环境，分为以下几种不同类型：
 
-* **托管堆(The managed heap)**：VM 使用 [垃圾回收器](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-garbage-collector.html)(GC) 自动控制的内存区域。因此，在托管堆上分配的内存被称为 **GC 分配(GC Allocation)**。[Profiler](https://docs.unity3d.com/2022.3/Documentation/Manual/Profiler.html) 将此类分配的任何发生记录为 **GC.Alloc** 采样。
-* **脚本栈(The scripting stack)**：当您的应用程序进入和退出任何代码范围时，脚本栈会建立和展开。
+* **托管堆(The Managed Heap)**：VM 使用 [垃圾回收器](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-garbage-collector.html)(GC) 自动控制的内存区域。因此，在托管堆上分配的内存被称为 **GC 分配(GC Allocation)**。[Profiler](https://docs.unity3d.com/2022.3/Documentation/Manual/Profiler.html) 将此类分配的任何发生记录为 **GC.Alloc** 采样。
+* **脚本栈(The Scripting Stack)**：当您的应用程序进入和退出任何代码范围时，脚本栈会建立和展开。
 * **原生 VM 内存(Native VM memory)**：包含与 Unity 脚本层相关的内存。大多数时候，您不需要操作原生 VM 内存，但了解它包含与您的代码生成的执行代码相关的内存会很有用，特别是围绕 [泛型(generics)](https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/types/generics) 的使用、[反射(Reflection)](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/reflection) 使用的类型元数据，以及运行 VM 所需的内存。
 
 由于托管内存系统使用 VM，它具有一个受控环境，可以自动跟踪分配的引用以管理其生命周期。这意味着您的应用程序不太可能过早释放内存，而其他代码正在尝试访问它。这也意味着您可以对 [内存泄漏(memory leaks)](https://en.wikipedia.org/wiki/Memory_leak) 提供一些保护，内存泄漏发生在内存无法从代码访问或未使用的内存堆积时。
@@ -301,7 +301,7 @@ Profiler 分配器共享一个桶分配器实例。您可以在 Profiler [共享
 
 ### 线程安全线性分配器(Thread-safe Linear Allocator)
 
-Unity 中的工作线程使用循环首次进入首次退出(FIFO) 算法，用于快速、无锁地分配 Job 的工作缓冲区。Job 完成后会释放缓冲区。
+Unity 中的工作线程使用循环先进先出(FIFO) 算法，用于快速、无锁地分配 Job 的工作缓冲区。Job 完成后会释放缓冲区。
 
 此分配器分配内存块，然后在这些块内线性分配内存。可用块保存在池中。当一个块满时，分配器从池中获取一个新块。当分配器不再需要块中的内存时，它会清除该块，并且该块返回到可用块池中。快速清除分配以使块再次可用非常重要，因此 Job 的分配时间不应超过几帧。
 
