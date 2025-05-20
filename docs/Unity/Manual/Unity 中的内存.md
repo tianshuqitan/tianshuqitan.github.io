@@ -8,8 +8,6 @@ index: false
 
 [原文地址 - UnityManual](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-memory-overview.html)
 
-## 概览
-
 为了确保您的应用程序运行时没有性能问题，了解 Unity 如何使用和分配内存非常重要。本文档的这一部分解释了 Unity 中内存的工作原理，旨在帮助希望提高应用程序内存性能的读者。
 
 Unity 使用三个内存管理层来处理应用程序中的内存：
@@ -110,7 +108,9 @@ Unity 的托管内存系统使用 [垃圾回收器](https://docs.unity3d.com/202
 
 ## 原生内存
 
-> **注意**：本节中关于分配器的信息**仅适用于原生内存**，不适用于托管堆，托管堆在 [托管内存](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-managed-memory.html) 部分中介绍。本节假设您对原生内存管理和分配器有一般了解。
+:::tip
+本节中关于分配器的信息**仅适用于原生内存**，不适用于托管堆，托管堆在 [托管内存](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-managed-memory.html) 部分中介绍。本节假设您对原生内存管理和分配器有一般了解。
+:::
 
 应用程序使用内存分配器来平衡性能和可用内存空间。如果应用程序有大量空闲内存，它可以在加载 **场景** 和帧时优先使用更快、内存占用更多的分配器。然而，如果应用程序内存有限，即使这意味着使用较慢的分配器，它也需要有效地使用该内存。为了帮助您为不同的项目获得最佳性能，您可以自定义 Unity 的分配器以适应每个应用程序的大小和要求。
 
@@ -126,7 +126,9 @@ Unity 有五种分配器类型。每种类型都有不同的算法将分配放�
 | [线程本地存储(TLS)栈(Thread Local Storage(TLS) stack)](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-tls-stack-allocator.html) | 后进先出(LIFO) 栈 | 临时分配 |
 | [线程安全线性(Threadsafe linear)](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-threadsafe-linear-allocator.html) | 循环首次进入首次退出(Round robin FIFO) | 用于将数据传递给 Job 的缓冲区 |
 
-> **注意**：本文档中的示例使用当您关闭 Player 或 Editor 时写入日志的内存使用报告，前提是您使用了 `-log-memory-performance-stats` 命令行参数。要查找您的日志文件，请按照 [日志文件页面](https://docs.unity3d.com/2022.3/Documentation/Manual/LogFiles.html) 上的说明进行操作。
+:::tip
+本文档中的示例使用当您关闭 Player 或 Editor 时写入日志的内存使用报告，前提是您使用了 `-log-memory-performance-stats` 命令行参数。要查找您的日志文件，请按照 [日志文件页面](https://docs.unity3d.com/2022.3/Documentation/Manual/LogFiles.html) 上的说明进行操作。
+:::
 
 ### 动态堆分配器(Dynamic Heap Allocator)
 
@@ -136,7 +138,7 @@ Unity 有五种分配器类型。每种类型都有不同的算法将分配放�
 
 动态堆分配器的示例使用报告：
 
-```
+```plain:no-line-numbers
 [ALLOC_DEFAULT_MAIN]
 Peak usage frame count: [16.0 MB-32.0 MB]: 497 frames, [32.0 MB-64.0 MB]: 1 frames
 Requested Block Size 16.0 MB
@@ -149,7 +151,9 @@ Peak Large allocation bytes 40.2 MB
 
 如果您增加块大小，大分配将保留在动态堆中，而不是回退到虚拟内存。然而，该块大小可能导致内存浪费，因为这些块可能未被充分使用。
 
-> **提示**：类型树和文件缓存分配器使用动态堆分配。为了节省它们在这种算法下可能使用的内存块，您可以将类型树块大小和文件缓存块大小设置为 0。原本会使用类型树和缓存的分配将回退到主要分配器。**注意**，这会增加原生内存碎片的风险。有关如何设置这些块大小的信息，请参阅 [自定义分配器](https://docs.unity3d.com/2022.3/Documentation/Manual/memory-allocator-customization.html)。
+:::tip
+类型树和文件缓存分配器使用动态堆分配。为了节省它们在这种算法下可能使用的内存块，您可以将类型树块大小和文件缓存块大小设置为 0。原本会使用类型树和缓存的分配将回退到主要分配器。**注意**，这会增加原生内存碎片的风险。有关如何设置这些块大小的信息，请参阅 [自定义分配器](https://docs.unity3d.com/2022.3/Documentation/Manual/memory-allocator-customization.html)。
+:::
 
 ### 桶分配器(Bucket Allocator)
 
@@ -182,7 +186,7 @@ Peak Large allocation bytes 40.2 MB
 
 头部是分配器在分配了 4MB 中的 2MB 后报告已满的原因：
 
-```
+```plain:no-line-numbers
 [ALLOC_BUCKET]
       Large Block size 4.0 MB
       Used Block count 1
@@ -200,7 +204,7 @@ Peak Large allocation bytes 40.2 MB
 
 在同一项目的发布版本中，分配器块大小足够：
 
-```
+```plain:no-line-numbers
 [ALLOC_BUCKET]
       Large Block size 4.0 MB
       Used Block count 1
@@ -211,7 +215,9 @@ Peak Large allocation bytes 40.2 MB
 
 为了防止这些回退分配，请增加块大小，并将新块大小限制为与帧的峰值使用量匹配，而不是场景加载的峰值使用量。这可以防止块变得太大而保留大量内存，从而在运行时不可用。
 
-> **提示**：Profiler 分配器共享一个桶分配器实例。您可以在 Profiler [共享桶分配器(Shared Bucket Allocator)](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-bucket-allocator.html#example) 中自定义此共享实例。
+:::tip
+Profiler 分配器共享一个桶分配器实例。您可以在 Profiler [共享桶分配器(Shared Bucket Allocator)](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-bucket-allocator.html#example) 中自定义此共享实例。
+:::
 
 ### 双线程分配器(Dual Thread Allocator)
 
@@ -228,7 +234,7 @@ Peak Large allocation bytes 40.2 MB
 
 使用报告包含分配器所有三个部分的信息。例如：
 
-```
+```plain:no-line-numbers
 [ALLOC_DEFAULT] Dual Thread Allocator
   Peak main deferred allocation count 135
     [ALLOC_BUCKET]
@@ -249,7 +255,9 @@ Peak Large allocation bytes 40.2 MB
       Peak Large allocation bytes 47.3 MB
 ```
 
-> **注意**：**Peak main deferred allocation count** 是删除队列中的项目数。主线程必须删除它进行的任何分配。如果另一个线程删除分配，则该分配将添加到队列中。分配在队列中等待主线程删除它。然后将其计为延迟分配。
+:::tip
+**Peak main deferred allocation count** 是删除队列中的项目数。主线程必须删除它进行的任何分配。如果另一个线程删除分配，则该分配将添加到队列中。分配在队列中等待主线程删除它。然后将其计为延迟分配。
+:::
 
 ### 线程本地存储(TLS)栈分配器(Thread Local Storage Stack Allocator)
 
@@ -257,7 +265,9 @@ Peak Large allocation bytes 40.2 MB
 
 临时分配器的默认块大小对于平台为 4MB，对于 Unity Editor 为 16MB。您可以自定义这些值。
 
-> **注意**：如果分配器使用量超过配置的块大小，Unity 会增加块大小。此增加的限制是原始大小的两倍。
+:::tip
+如果分配器使用量超过配置的块大小，Unity 会增加块大小。此增加的限制是原始大小的两倍。
+:::
 
 ![Main Thread Block Size custom value in the Fast Per Thread Temporary Allocators](https://docs.unity3d.com/2022.3/Documentation/uploads/Main/Per_Thread.png)
 
@@ -267,7 +277,7 @@ Peak Large allocation bytes 40.2 MB
 
 使用报告中的信息可以帮助您选择适合应用程序的块大小。例如，在以下主线程使用报告中，加载峰值为 2.7MB，但其余帧低于 64KB。您可以将块大小从 4MB 减小到 64KB，并允许加载帧溢出分配：
 
-```
+```plain:no-line-numbers
 [ALLOC_TEMP_TLS] TLS Allocator
   StackAllocators :
     [ALLOC_TEMP_MAIN]
@@ -281,7 +291,7 @@ Peak Large allocation bytes 40.2 MB
 
 在第二个示例中，工作线程不用于大型临时分配。为了节省内存，您可以将工作线程的块大小减小到 32KB。这在多核机器上特别有用，其中每个工作线程都有自己的栈：
 
-```
+```plain:no-line-numbers
 [ALLOC_TEMP_Job.Worker 14]
       Initial Block Size 256.0 KB
       Current Block Size 256.0 KB
@@ -305,7 +315,7 @@ Unity 中的工作线程使用循环首次进入首次退出(FIFO) 算法，用�
 
 例如：
 
-```
+```plain:no-line-numbers
 [ALLOC_TEMP_JOB_4_FRAMES(JobTemp)]
   Initial Block Size 0.5 MB
   Used Block Count 64
@@ -319,7 +329,9 @@ Unity 中的工作线程使用循环首次进入首次退出(FIFO) 算法，用�
 
 ### 自定义分配器
 
-> **注意：**并非所有平台都支持此功能。有关更多信息，请参阅 [平台特定](https://docs.unity3d.com/2022.3/Documentation/Manual/PlatformSpecific.html) 文档。
+:::tip
+并非所有平台都支持此功能。有关更多信息，请参阅 [平台特定](https://docs.unity3d.com/2022.3/Documentation/Manual/PlatformSpecific.html) 文档。
+:::
 
 要自定义分配器设置，您可以通过 [Editor UI](https://docs.unity3d.com/2022.3/Documentation/Manual/memory-allocator-customization.html#use-the-editor) 编辑可配置值，或将其作为 [命令行参数](https://docs.unity3d.com/2022.3/Documentation/Manual/memory-allocator-customization.html#use-command-line-arguments) 提供。
 
@@ -332,7 +344,9 @@ Unity 中的工作线程使用循环首次进入首次退出(FIFO) 算法，用�
 
 > Project Settings > Memory Settings，显示 Player 内存设置的选择
 
-> **注意**：有关可通过 Editor UI 自定义的字段，请参阅前面的各个分配器部分。
+:::tip
+有关可通过 Editor UI 自定义的字段，请参阅前面的各个分配器部分。
+:::
 
 **使用命令行参数**
 

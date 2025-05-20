@@ -488,3 +488,45 @@ caution 自定义标题
 :::details 自定义标题
 details 自定义标题
 :::
+
+### 代码块
+
+默认显示行号，手动禁用行号(`:no-line-numbers`)，手动启用行号(`:line-numbers`)
+
+```plain:no-line-numbers
+[ALLOC_TEMP_JOB_4_FRAMES(JobTemp)]
+  Initial Block Size 0.5 MB
+  Used Block Count 64
+  Overflow Count(too large) 0
+  Overflow Count(full) 50408
+```
+
+行高亮，按照范围 `{5-8}`，多个单行 `{4,7,9}`，或者组合使用 `{4,7-13,16,23-27,40}`
+
+```ts {1,7-9}
+import { defaultTheme } from "@vuepress/theme-default";
+import { defineUserConfig } from "vuepress";
+
+export default defineUserConfig({
+  title: "你好， VuePress",
+
+  theme: defaultTheme({
+    logo: "https://vuejs.org/images/logo.png",
+  }),
+});
+```
+
+代码标题，`title`
+
+```ts title=".vuepress/config.ts"
+import { defaultTheme } from "@vuepress/theme-default";
+import { defineUserConfig } from "vuepress";
+
+export default defineUserConfig({
+  title: "你好， VuePress",
+
+  theme: defaultTheme({
+    logo: "https://vuejs.org/images/logo.png",
+  }),
+});
+```
