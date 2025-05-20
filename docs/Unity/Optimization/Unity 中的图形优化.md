@@ -124,7 +124,10 @@ Unity 的 [帧调试器(Frame Debugger)](https://unity3d.com/learn/tutorials/top
 
 **过度绘制视图(Overdraw view)**
 
-过度绘制视图允许您查看 Unity 相互绘制的对象。您可以使用 [场景视图控制栏(Scene View Control Bar)](http://docs.unity3d.com/Manual/ViewModes.html)在场景视图中查看过度绘制。
+过度绘制视图允许您查看 Unity 相互绘制的对象。您可以使用 [场景视图控制栏(Scene View Control Bar)](http://docs.unity3d.com/Manual/ViewModes.html) 在场景视图中查看过度绘制。
+> 内置渲染管线中可以看到 Overdraw 模式，但是 SRP(URP/HDRP) 管线下，看不到 Miscellaneous(杂项) 分组(Overdraw 就在其中)。
+>
+> SRP 下，可以通过 `Analysis > Rendering Debugger > Rendering` 下的 Overdraw Mode 查看。
 
 ![](./Assets/Overdraw_in_the_Scene_View_Control_Bar.png)
 

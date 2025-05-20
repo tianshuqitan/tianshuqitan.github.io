@@ -123,14 +123,14 @@ Unity 有五种分配器类型。每种类型都有不同的算法将分配放�
 | [动态堆(Dynamic heap)](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-dynamic-heap-allocator.html) | 两级隔离适配(Two Level Segregated Fit, TLSF) | • 主要分配器 <br>• Gfx 分配器 <br>• Typetree 分配器 <br>• 文件缓存分配器 <br>• Profiler 分配器 <br>• Editor Profiler 分配器(仅在 Editor 中) |
 | [桶(Bucket)](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-bucket-allocator.html) | 固定大小无锁分配器 | 作为小型分配的共享分配器，用于：<br>• 主要分配器 <br>• Gfx 分配器 <br>• Typetree 分配器 <br>• 文件缓存分配器 |
 | [双线程(Dual thread)](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-dual-thread-allocator.html) | 根据大小和线程 ID 重定向分配 | • 主要分配器 <br>• Gfx 分配器 <br>• Typetree 分配器 <br>• 文件缓存分配器 |
-| [线程本地存储(TLS) 栈(Thread Local Storage(TLS) stack)](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-tls-stack-allocator.html) | 后进先出(LIFO) 栈 | 临时分配 |
+| [线程本地存储(TLS)栈(Thread Local Storage(TLS) stack)](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-tls-stack-allocator.html) | 后进先出(LIFO) 栈 | 临时分配 |
 | [线程安全线性(Threadsafe linear)](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-threadsafe-linear-allocator.html) | 循环首次进入首次退出(Round robin FIFO) | 用于将数据传递给 Job 的缓冲区 |
 
 > **注意**：本文档中的示例使用当您关闭 Player 或 Editor 时写入日志的内存使用报告，前提是您使用了 `-log-memory-performance-stats` 命令行参数。要查找您的日志文件，请按照 [日志文件页面](https://docs.unity3d.com/2022.3/Documentation/Manual/LogFiles.html) 上的说明进行操作。
 
-### 动态堆分配器(待完善)
+### 动态堆分配器(Dynamic Heap Allocator)
 
-动态堆分配器是主要的堆分配器。它将两级隔离适配(TLSF) 算法应用于内存块。
+动态堆分配器是主要的堆分配器。它将两级隔离适配(TLSF)算法应用于内存块。
 
 每个平台都有一个默认块大小，[您可以自定义](https://docs.unity3d.com/2022.3/Documentation/Manual/memory-allocator-customization.html)。分配必须小于半个块。半个块或更大的分配对于动态堆分配器来说太大，在这种情况下，Unity 会使用虚拟内存 API 进行分配。
 
@@ -149,23 +149,23 @@ Peak Large allocation bytes 40.2 MB
 
 如果您增加块大小，大分配将保留在动态堆中，而不是回退到虚拟内存。然而，该块大小可能导致内存浪费，因为这些块可能未被充分使用。
 
-> **提示**：类型树和文件缓存分配器使用动态堆分配。为了节省它们在这种算法下可能使用的内存块，您可以将类型树块大小和文件缓存块大小设置为 0。原本会使用类型树和缓存的分配将回退到主要分配器。**注意**，这会增加原生内存碎片的风险。有关如何设置这些块大小的信息，请参阅[自定义分配器](https://docs.unity3d.com/2022.3/Documentation/Manual/memory-allocator-customization.html)。
+> **提示**：类型树和文件缓存分配器使用动态堆分配。为了节省它们在这种算法下可能使用的内存块，您可以将类型树块大小和文件缓存块大小设置为 0。原本会使用类型树和缓存的分配将回退到主要分配器。**注意**，这会增加原生内存碎片的风险。有关如何设置这些块大小的信息，请参阅 [自定义分配器](https://docs.unity3d.com/2022.3/Documentation/Manual/memory-allocator-customization.html)。
 
-### 桶分配器
+### 桶分配器(Bucket Allocator)
 
 桶分配器是一种快速的无锁分配器，用于执行小型分配。通常，桶分配器用作加速小型分配的第一步，然后它们才会进入堆分配器。
 
 分配器为分配保留内存块。每个块被分成 16KB 的**子部分(subsections)**。这是不可配置的，并且不会出现在用户界面中。每个子部分被分成**分配(allocations)**。分配大小是配置的固定大小的倍数，称为**粒度(granularity)**。
 
-## 示例配置
+**示例配置**
 
 以下示例配置演示了为分配保留块的过程：
 
 ![Shared Bucket Allocator for the Windows, Mac and Linux Player](https://docs.unity3d.com/2022.3/Documentation/uploads/Main/Shared_Bucket.png)
 
-> Windows、Mac 和 Linux Player 的共享桶分配器
+> Windows、Mac 和 Linux Player 的共享桶分配器(Shared Bucket Allocator)，`Project Settings > Memory Settings > Main Allocator > Shared Bucket Allocator`。
 
-在此设置中，总**块(block)** 大小(**Bucket Allocator Block Size**)为 4MB，分配的粒度(**Bucket Allocator Granularity**)为 16B。第一次分配为 16B，第二次为 32B(2\*16)，然后是 48B、64B、80B、96B、112B 和 128B，总共有八个桶(**Bucket Allocator BucketCount**)。
+在此设置中，总**块(block)** 大小(**Bucket Allocator Block Size**)为 4MB，分配的粒度(**Bucket Allocator Granularity**)为 16B。第一次分配为 16B，第二次为 32B(2*16)，然后是 48B、64B、80B、96B、112B 和 128B，总共有八个桶(**Bucket Allocator BucketCount**)。
 
 每个子部分包含不同数量的桶。要计算子部分中的桶数，请将子部分大小(16KB) 除以粒度大小。例如：
 
@@ -213,9 +213,9 @@ Peak Large allocation bytes 40.2 MB
 
 > **提示**：Profiler 分配器共享一个桶分配器实例。您可以在 Profiler [共享桶分配器(Shared Bucket Allocator)](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-bucket-allocator.html#example) 中自定义此共享实例。
 
-### 双线程分配器
+### 双线程分配器(Dual Thread Allocator)
 
-双线程分配器是一个包装器，它结合了[动态堆](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-dynamic-heap-allocator.html)和[桶](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-bucket-allocator.html)分配器。更具体地说，它结合了：
+双线程分配器是一个包装器，它结合了 [动态堆(Dynamic Heap)](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-dynamic-heap-allocator.html) 和 [桶(Bucket)](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-bucket-allocator.html) 分配器。更具体地说，它结合了：
 
 * 两个动态堆分配器：一个用于主线程的无锁分配器，以及一个由所有其他线程共享的分配器，该分配器在分配和释放时锁定。Unity 使用这些分配器进行对于桶分配器来说太大的分配。动态堆分配器使用内存块。等于或大于半个块的分配会进入虚拟内存系统，而不是动态堆分配器。
 * 一个用于小型分配的桶分配器。如果桶分配器已满，分配会溢出到动态堆分配器。
@@ -224,7 +224,7 @@ Peak Large allocation bytes 40.2 MB
 
 ![Main Allocator, with a custom value for Shared Thread Block Size](https://docs.unity3d.com/2022.3/Documentation/uploads/Main/Main_Allocator.png)
 
-主分配器，带有共享线程块大小的自定义值
+> 主分配器，带有共享线程块大小的自定义值
 
 使用报告包含分配器所有三个部分的信息。例如：
 
@@ -251,9 +251,9 @@ Peak Large allocation bytes 40.2 MB
 
 > **注意**：**Peak main deferred allocation count** 是删除队列中的项目数。主线程必须删除它进行的任何分配。如果另一个线程删除分配，则该分配将添加到队列中。分配在队列中等待主线程删除它。然后将其计为延迟分配。
 
-### 线程本地存储(TLS) 栈分配器
+### 线程本地存储(TLS)栈分配器(Thread Local Storage Stack Allocator)
 
-每个线程都使用自己的快速栈分配器进行临时分配。这些分配速度非常快，生命周期小于一帧。分配器使用后进先出(LIFO) 栈。
+每个线程都使用自己的快速栈分配器进行临时分配。这些分配速度非常快，生命周期小于一帧。分配器使用后进先出(LIFO)栈。
 
 临时分配器的默认块大小对于平台为 4MB，对于 Unity Editor 为 16MB。您可以自定义这些值。
 
@@ -261,9 +261,9 @@ Peak Large allocation bytes 40.2 MB
 
 ![Main Thread Block Size custom value in the Fast Per Thread Temporary Allocators](https://docs.unity3d.com/2022.3/Documentation/uploads/Main/Per_Thread.png)
 
-快速每线程临时分配器中的主线程块大小自定义值
+> 快速每线程临时分配器(Fast Per Thread Temporary Allocators)中的主线程块大小(Main Thread Block Size)自定义值
 
-如果线程的栈分配器已满，分配将回退到[线程安全线性分配器](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-threadsafe-linear-allocator.html)。少量溢出分配是可以接受的：一帧中 1 到 10 个，或加载期间几百个。然而，如果每帧数量都在增加，您可以增加块大小。
+如果线程的栈分配器已满，分配将回退到 [线程安全线性分配器](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-threadsafe-linear-allocator.html)。少量溢出分配是可以接受的：一帧中 1 到 10 个，或加载期间几百个。然而，如果每帧数量都在增加，您可以增加块大小。
 
 使用报告中的信息可以帮助您选择适合应用程序的块大小。例如，在以下主线程使用报告中，加载峰值为 2.7MB，但其余帧低于 64KB。您可以将块大小从 4MB 减小到 64KB，并允许加载帧溢出分配：
 
@@ -289,7 +289,7 @@ Peak Large allocation bytes 40.2 MB
       Overflow Count 0
 ```
 
-### 线程安全线性分配器
+### 线程安全线性分配器(Thread-safe Linear Allocator)
 
 Unity 中的工作线程使用循环首次进入首次退出(FIFO) 算法，用于快速、无锁地分配 Job 的工作缓冲区。Job 完成后会释放缓冲区。
 
@@ -299,7 +299,7 @@ Unity 中的工作线程使用循环首次进入首次退出(FIFO) 算法，用�
 
 ![Default value for Fast Thread Shared Temporary Allocators for the Editor](https://docs.unity3d.com/2022.3/Documentation/uploads/Main/Fast_Thread.png)
 
-Editor 的快速线程共享临时分配器的默认值
+> Editor 的快速线程共享临时分配器(Fast Thread Shared Temporary Allocators)的默认值
 
 如果所有块都在使用中，或者分配对于块来说太大，分配将回退到主堆分配器，这比 Job 分配器慢得多。少量溢出分配是可以接受的：一帧中 1 到 10 个，或几百个，尤其是在加载期间。如果溢出计数每帧都在增加，您可以增加块大小以避免回退分配。然而，如果块大小增加过多(例如，为了匹配场景加载等事件中的峰值使用量)，您可能会在播放期间留下大量内存不可用。
 
@@ -319,9 +319,9 @@ Editor 的快速线程共享临时分配器的默认值
 
 ### 自定义分配器
 
-> **注意：**并非所有平台都支持此功能。有关更多信息，请参阅[平台特定](https://docs.unity3d.com/2022.3/Documentation/Manual/PlatformSpecific.html)文档。
+> **注意：**并非所有平台都支持此功能。有关更多信息，请参阅 [平台特定](https://docs.unity3d.com/2022.3/Documentation/Manual/PlatformSpecific.html) 文档。
 
-要自定义分配器设置，您可以通过 [Editor UI](https://docs.unity3d.com/2022.3/Documentation/Manual/memory-allocator-customization.html#use-the-editor) 编辑可配置值，或将其作为[命令行参数](https://docs.unity3d.com/2022.3/Documentation/Manual/memory-allocator-customization.html#use-command-line-arguments)提供。
+要自定义分配器设置，您可以通过 [Editor UI](https://docs.unity3d.com/2022.3/Documentation/Manual/memory-allocator-customization.html#use-the-editor) 编辑可配置值，或将其作为 [命令行参数](https://docs.unity3d.com/2022.3/Documentation/Manual/memory-allocator-customization.html#use-command-line-arguments) 提供。
 
 **使用 Editor**
 
@@ -330,7 +330,7 @@ Editor 的快速线程共享临时分配器的默认值
 
 ![Project Settings > Memory Settings, showing a selection of Player memory settings](https://docs.unity3d.com/2022.3/Documentation/uploads/Main/Memory_Settings.png)
 
-项目设置 > 内存设置，显示 Player 内存设置的选择
+> Project Settings > Memory Settings，显示 Player 内存设置的选择
 
 > **注意**：有关可通过 Editor UI 自定义的字段，请参阅前面的各个分配器部分。
 
@@ -340,50 +340,50 @@ Editor 的快速线程共享临时分配器的默认值
 
 分配器参数名称及其默认值：
 
-| **分配器** | **描述** | **参数名称** | **默认值** |
-| --- | --- | --- | --- |
-| 主要分配器 | Unity 用于大多数分配的分配器。 |
-|  | 主分配器 | Unity 用于大多数分配的主要分配器。 |
-|  |  | 主线程块大小 | 专用主线程分配器的块大小。 | `memorysetup-main-allocator-block-size` | `16777216` |
-|  |  | 共享线程块大小 | 共享线程分配器的块大小。 | `memorysetup-thread-allocator-block-size` | `16777216` |
-|  | Gfx 分配器 | Unity 用于与 Gfx 系统相关的 CPU 分配的分配器。 |
-|  |  | 主线程块大小 | 专用主线程 Gfx 分配器的块大小。 | `memorysetup-gfx-main-allocator-block-size` | `16777216` |
-|  |  | 共享线程块大小 | 共享线程 Gfx 分配器的块大小。 | `memorysetup-gfx-thread-allocator-block-size` | `16777216` |
-|  | 其他分配器 |
-|  |  | 文件缓存块大小 | 文件缓存有自己的分配器以避免碎片。这是它的块大小。 | `memorysetup-cache-allocator-block-size` | `4194304` |
-|  |  | 类型树块大小 | 类型树有自己的分配器以避免由于许多小型分配而导致的碎片。这是它的块大小。 | `memorysetup-typetree-allocator-block-size` | `2097152` |
-|  | 共享桶分配器 | 在主要分配器之间共享的桶分配器。 |
-|  |  | 桶分配器粒度 | 共享分配器中桶的步长。 | `memorysetup-bucket-allocator-granularity` | `16` |
-|  |  | 桶分配器桶数 | 桶大小的数量。例如，如果值为 4，则大小为 16、32、48 和 64。 | `memorysetup-bucket-allocator-bucket-count` | `8` |
-|  |  | 桶分配器块大小 | 用于桶的内存块大小。 | `memorysetup-bucket-allocator-block-size` | `Editor: 8388608` <br>`Player: 4194304` |
-|  |  | 桶分配器块数 | 要分配的最大块数。 | `memorysetup-bucket-allocator-block-count` | `Editor: 8`<br>`Player: 1` |
-| 快速每线程临时分配器 | 处理非常短生命周期分配的线程本地存储(TLS) 分配器。 |
-|  | 主线程块大小 | 主线程栈的初始大小。 | `memorysetup-temp-allocator-size-main` | `Editor: 16777216`<br>`Player: 4194304` |
-|  | Job Worker 块大小 | Unity Job 系统中每个 Job Worker 的大小。 | `memorysetup-temp-allocator-size-job-worker` | `E262144` |
-|  | 后台 Job Worker 块大小 | 每个后台 Worker 的大小。 | `memorysetup-temp-allocator-size-background-worker` | `32768` |
-|  | 预加载块大小 | 预加载管理器栈大小。 | `memorysetup-temp-allocator-size-preload-manager` | `Editor: 33554432`<br>`Player: 262144` |
-|  | 音频 Worker 块大小 | 每个音频 Worker 线程的栈大小。 | `memorysetup-temp-allocator-size-audio-worker` | `65536` |
-|  | 云 Worker 块大小 | 云 Worker 线程栈大小。 | `memorysetup-temp-allocator-size-cloud-worker` | `32768` |
-|  | Gfx 线程块大小 | 主渲染线程栈大小。 | `memorysetup-temp-allocator-size-gfx` | `262144` |
-|  | GI Baking 块大小 | 每个 GI Worker 线程的栈大小。 | `memorysetup-temp-allocator-size-gi-baking-worker` | `262144` |
-|  | **NavMesh** Worker 块大小 | Nav **mesh** Worker 线程栈大小。 | `memorysetup-temp-allocator-size-nav-mesh-worker` | `65536` |
-| 快速线程共享临时分配器 | 用于线程之间共享的短生命周期分配的快速线性分配器。 |
-|  | Job 分配器块大小 | Unity 主要用于 Job Worker 线程的循环线性线程分配器。 | `memorysetup-job-temp-allocator-block-size` | `2097152` |
-|  | 后台 Job 分配器块大小 | 后台 Worker 的线性分配器，允许更长生命周期的分配。 | `memorysetup-job-temp-allocator-block-size-background` | `21048576` |
-|  | 低内存平台上的 Job 分配器块大小 | 内存小于 2GB 的平台对 Job Worker 和后台 Job 都使用此大小。 | `memorysetup-job-temp-allocator-reduction-small-platforms` | `262144` |
-| **Profiler** 分配器 | Unity 专门用于 Profiler 的分配器，以便它们不干扰应用程序的分配模式。 |
-|  | Profiler 块大小 | Profiler 主要部分的块大小。 | `memorysetup-profiler-allocator-block-size` | `16777216` |
-|  | Editor Profiler 块大小 | Profiler 的 Editor 部分的块大小。Player 中不存在。 | `memorysetup-profiler-editor-allocator-block-size` | `1048576` |
-|  | 共享 Profiler 桶分配器 | Profiler 和 Editor Profiler 分配器的共享桶分配器。低内存平台中不存在。 |
-|  |  | 桶分配器粒度 | 共享分配器中桶的步长。 | `memorysetup-profiler-bucket-allocator-granularity` | `16` |
-|  |  | 桶分配器桶数 | 桶大小的数量。例如，如果值为 4，则大小为 16、32、48 和 64。 | `memorysetup-profiler-bucket-allocator-bucket-count` | `8` |
-|  |  | 桶分配器块大小 | 用于桶的内存块大小。 | `memorysetup-profiler-bucket-allocator-block-size` | `Editor: 33554432`<br>`Player: 4194304` |
-|  |  | 桶分配器块数 | 要分配的最大块数。 | `memorysetup-profiler-bucket-allocator-block-count` | `Editor: 8`<br>`Player: 1` |
+| **分配器** | | |**描述** | **参数名称** | **默认值** |
+| --- | ---| ---| ---| --- | --- |
+| 主要分配器<br>Main Allocators | Unity 用于大多数分配的分配器。 |
+|  | 主分配器<br>Main Allocator | Unity 用于大多数分配的主要分配器。 |
+|  |  | 主线程块大小<br>Main Thread Block Size | 专用主线程分配器的块大小。 | `memorysetup-main-allocator-block-size` | `16MB` |
+|  |  | 共享线程块大小<br>Shared Thread Block Size | 共享线程分配器的块大小。 | `memorysetup-thread-allocator-block-size` | `16MB` |
+|  | Gfx 分配器<br>Gfx Allocator | Unity 用于与 Gfx 系统相关的 CPU 分配的分配器。 |
+|  |  | 主线程块大小<br>Main Thread Block Size | 专用主线程 Gfx 分配器的块大小。 | `memorysetup-gfx-main-allocator-block-size` | `16MB` |
+|  |  | 共享线程块大小<br>Shared Thread Block Size | 共享线程 Gfx 分配器的块大小。 | `memorysetup-gfx-thread-allocator-block-size` | `16MB` |
+|  | 其他分配器<br>Other Allocators |
+|  |  | 文件缓存块大小<br>File Cache Block Size | 文件缓存有自己的分配器以避免碎片。这是它的块大小。 | `memorysetup-cache-allocator-block-size` | `4MB` |
+|  |  | 类型树块大小<br>Type Tree Block Size | 类型树有自己的分配器以避免由于许多小型分配而导致的碎片。这是它的块大小。 | `memorysetup-typetree-allocator-block-size` | `2MB` |
+|  | 共享桶分配器<br>Shared Bucket Allocator | 在主要分配器之间共享的桶分配器。 |
+|  |  | 桶分配器粒度<br>Bucket Allocator Granularity | 共享分配器中桶的步长。 | `memorysetup-bucket-allocator-granularity` | `16B` |
+|  |  | 桶分配器桶数<br>Bucket Allocator BucketCount | 桶大小的数量。例如，如果值为 4，则大小为 16、32、48 和 64。 | `memorysetup-bucket-allocator-bucket-count` | `8` |
+|  |  | 桶分配器块大小<br>Bucket Allocator Block Size | 用于桶的内存块大小。 | `memorysetup-bucket-allocator-block-size` | `Editor: 8MB` <br>`Player: 4MB` |
+|  |  | 桶分配器块数<br>Bucket Allocator Block Count | 要分配的最大块数。 | `memorysetup-bucket-allocator-block-count` | `Editor: 8`<br>`Player: 1` |
+| 快速每线程临时分配器<br>Fast Per Thread Temporary Allocators | 处理非常短生命周期分配的线程本地存储(TLS) 分配器。 |
+|  | 主线程块大小<br>Main Thread Block Size |主线程栈的初始大小。|  | `memorysetup-temp-allocator-size-main` | `Editor: 16MB`<br>`Player: 4MB` |
+|  | Job Worker 块大小<br>Job Worker Block Size | Unity Job 系统中每个 Job Worker 的大小。 |  | `memorysetup-temp-allocator-size-job-worker` | `256KB` |
+|  | 后台 Job Worker 块大小<br>Job Worker Block Size | 每个后台 Worker 的大小。|  | `memorysetup-temp-allocator-size-background-worker` | `32KB` |
+|  | 预加载块大小<br>Preload Block Size | 预加载管理器栈大小。|  | `memorysetup-temp-allocator-size-preload-manager` | `Editor: 32MB`<br>`Player: 256KB` |
+|  | 音频 Worker 块大小<br>Audio Worker Block Size | 每个音频 Worker 线程的栈大小。|  | `memorysetup-temp-allocator-size-audio-worker` | `64KB` |
+|  | 云 Worker 块大小<br>Cloud Worker Block Size | 云 Worker 线程栈大小。 |  | `memorysetup-temp-allocator-size-cloud-worker` | `32KB` |
+|  | Gfx 线程块大小<br>Gfx Thread Blocksize | 主渲染线程栈大小。|  | `memorysetup-temp-allocator-size-gfx` | `256KB` |
+|  | GI Baking 块大小<br>GI Baking Blocksize | 每个 GI Worker 线程的栈大小。|  | `memorysetup-temp-allocator-size-gi-baking-worker` | `256KB` |
+|  | **NavMesh** Worker 块大小<br>NavMesh Worker Block Size | Nav **mesh** Worker 线程栈大小。| | `memorysetup-temp-allocator-size-nav-mesh-worker` | `64KB` |
+| 快速线程共享临时分配器<br>Fast Thread Shared Temporary Allocators | 用于线程之间共享的短生命周期分配的快速线性分配器。 |
+|  | Job 分配器块大小<br>Job Allocator Block Size | Unity 主要用于 Job Worker 线程的循环线性线程分配器。|  | `memorysetup-job-temp-allocator-block-size` | `2MB` |
+|  | 后台 Job 分配器块大小<br>Background Job Allocator Block Size | 后台 Worker 的线性分配器，允许更长生命周期的分配。|  | `memorysetup-job-temp-allocator-block-size-background` | `1MB` |
+|  | 低内存平台上的 Job 分配器块大小<br>Job Allocator Block Size on low memory platforms | 内存小于 2GB 的平台对 Job Worker 和后台 Job 都使用此大小。|  | `memorysetup-job-temp-allocator-reduction-small-platforms` | `256KB` |
+| **Profiler** 分配器<br>Profiler Allocators | Unity 专门用于 Profiler 的分配器，以便它们不干扰应用程序的分配模式。 |
+|  | Profiler 块大小<br>Profiler Block Size |Profiler 主要部分的块大小。|  | `memorysetup-profiler-allocator-block-size` | `16MB` |
+|  | Editor Profiler 块大小<br>Editor Profiler Block Size |Profiler 的 Editor 部分的块大小。Player 中不存在。|  | `memorysetup-profiler-editor-allocator-block-size` | `1MB` |
+|  | 共享 Profiler 桶分配器<br>Shared Profiler Bucket Allocator  |Profiler 和 Editor Profiler 分配器的共享桶分配器。低内存平台中不存在。 |
+|  |  | 桶分配器粒度<br>Bucket Allocator Granularity | 共享分配器中桶的步长。 | `memorysetup-profiler-bucket-allocator-granularity` | `16B` |
+|  |  | 桶分配器桶数<br>Bucket Allocator BucketCount | 桶大小的数量。例如，如果值为 4，则大小为 16、32、48 和 64。 | `memorysetup-profiler-bucket-allocator-bucket-count` | `8` |
+|  |  | 桶分配器块大小<br>Bucket Allocator Block Size | 用于桶的内存块大小。 | `memorysetup-profiler-bucket-allocator-block-size` | `Editor: 32MB`<br>`Player: 4MB` |
+|  |  | 桶分配器块数<br>Bucket Allocator Block Count | 要分配的最大块数。 | `memorysetup-profiler-bucket-allocator-block-count` | `Editor: 8`<br>`Player: 1` |
 
-> **提示**：为了确保您的设置提高了性能，请在更改之前和之后对应用程序进行性能分析。有关更多信息，请参阅 [Profiler 概述页面](https://docs.unity3d.com/2022.3/Documentation/Manual/Profiler.html)和 [Profiler Analyzer](https://docs.unity3d.com/Packages/com.unity.performance.profile-analyzer@latest) 的包文档。Profiler Analyzer 支持多帧比较，这对于突出分配器性能差异特别有用。您还可以查看内存使用报告。当您关闭 Player 或 Editor 时，它们可在日志中找到。要查找您的日志文件，请按照[日志文件页面](https://docs.unity3d.com/2022.3/Documentation/Manual/LogFiles.html)上的说明进行操作。
+> **提示**：为了确保您的设置提高了性能，请在更改之前和之后对应用程序进行性能分析。有关更多信息，请参阅 [Profiler 概述页面](https://docs.unity3d.com/2022.3/Documentation/Manual/Profiler.html) 和  [Profiler Analyzer](https://docs.unity3d.com/Packages/com.unity.performance.profile-analyzer@latest) 的包文档。Profiler Analyzer 支持多帧比较，这对于突出分配器性能差异特别有用。您还可以查看内存使用报告。当您关闭 Player 或 Editor 时，它们可在日志中找到。要查找您的日志文件，请按照 [日志文件页面](https://docs.unity3d.com/2022.3/Documentation/Manual/LogFiles.html) 上的说明进行操作。
 
 **存储和读取设置**
 
 Unity 将分配器设置存储在 `MemorySettings.asset` 中，这些设置在构建过程中应用。这意味着新设置在每次构建时都会生效。
 
-在 Editor 中，这些设置存储在 `ProjectSettings` 文件夹中，并在 Unity 导入或更改 `MemorySettings.asset` 时更新。 Editor 的新值仅在下次 Editor 启动时生效。
+在 Editor 中，这些设置存储在 `ProjectSettings` 文件夹中，并在 Unity 导入或更改 `MemorySettings.asset` 时更新。Editor 的新值仅在下次 Editor 启动时生效。
