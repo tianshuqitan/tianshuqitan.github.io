@@ -11,6 +11,7 @@ export const sidebarConfig = sidebar({
     "/Unity/": [
         "RoadMap/",
         "Manual/",
+        "Notes/",
         "Optimization/",
     ],
 });

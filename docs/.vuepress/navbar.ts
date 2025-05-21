@@ -16,6 +16,7 @@ export default navbar([
         children: [
             "RoadMap/README.md",
             "Manual/README.md",
+            "Notes/README.MD",
             "Optimization/README.md"
         ]
     },
