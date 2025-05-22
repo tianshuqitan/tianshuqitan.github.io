@@ -240,11 +240,13 @@ Unity 使用 DSP 缓冲区大小来控制 [混音器延迟(mixer latency)](https
 
 ## Android 内存管理(Android Memory Management)
 
+[Android 内存管理概览 - UnityDevelopers](https://developer.android.com/topic/performance/memory-overview?hl=zh-cn&_gl=1*15q81u3*_up*MQ..*_ga*MTkxNTcxMDM2MS4xNzQ3OTI0NDE2*_ga_6HH9YJMN9M*czE3NDc5MjQ0MTUkbzEkZzAkdDE3NDc5MjQ0MTUkajAkbDAkaDE2MDI1ODAyODkkZGZhLWN1NUJOZ3VpT2lDUU5QeWVMR2dick1rVE11LVQtVFE.)
+
 Android 上的内存由多个进程共享。一个进程使用了多少内存乍一看并不清楚。Android 内存管理很复杂。在继续阅读之前，请参阅 Google I/O 上关于 [理解 Android 内存使用](https://www.youtube.com/watch?v=w7K0jio8afM) 的演讲。
 
 ### Android 上的分页(Paging on Android)
 
-[分页](https://en.wikipedia.org/wiki/Paging) 是一种将内存从主内存移动到辅助内存或反之亦然的方法。
+[分页](https://en.wikipedia.org/wiki/Memory_paging) 是一种将内存从主内存移动到辅助内存或反之亦然的方法。
 
 Android 会分页到磁盘，但不使用交换空间(swap space)进行内存分页。这使得查看总内存更加困难，尤其是在 Android 中的每个应用程序都在不同的进程中运行，并且每个进程都运行自己的 Dalvik VM 实例。
 
@@ -256,11 +258,11 @@ Android 使用分页但不利用交换空间。分页严重依赖于内存映射
 
 Android 设备通常配备很少的板载闪存和有限的存储空间。板载闪存主要用于存储应用程序，但实际上可以存储交换文件。板载闪存速度慢，并且访问速度通常比硬盘或闪存驱动器差。
 
-板载闪存的大小不足以有效启用交换空间。交换文件大小的基本经验法则是每 1-2GB RAM 大约 512MB。你始终可以通过修改内核 .config 文件(CONFIG\_SWAP)并自己编译内核来启用交换支持，但这超出了本指南的范围。
+板载闪存的大小不足以有效启用交换空间。交换文件大小的基本经验法则是每 1-2GB RAM 大约 512MB。你始终可以通过修改内核 `.config` 文件(`CONFIG_SWAP`)并自己编译内核来启用交换支持，但这超出了本指南的范围。
 
 ### 内存消耗限制(Memory Consumption Limitations)
 
-在 [Android 系统](https://developer.android.com/guide/components/activities/process-lifecycle) 激活并开始关闭进程之前，你的应用程序可以使用多少内存？不幸的是，没有简单的答案，弄清楚这一点需要使用 dumpsys、procrank 和 Android Studio 等工具进行大量分析。
+在 [Android 系统](https://developer.android.com/guide/components/activities/process-lifecycle) 激活并开始关闭进程之前，你的应用程序可以使用多少内存？不幸的是，没有简单的答案，弄清楚这一点需要使用 `dumpsys`、`procrank` 和 Android Studio 等工具进行大量分析。
 
 许多不同的因素会影响你在 Android 上测量内存消耗的能力，例如：
 
@@ -277,24 +279,24 @@ Android 设备通常配备很少的板载闪存和有限的存储空间。板载
 
 ### Dumpsys
 
-如果你将映射到每个进程的所有物理 RAM 相加，然后将所有进程相加，结果将大于实际的总 RAM。使用 dumpsys，你可以获得有关每个 Java 进程的更清晰信息。dumpsys 提供的统计信息包含与应用程序内存相关的各种信息。dumpsys 是一个在设备上运行的 Android 工具，它会转储系统服务和应用程序的状态信息。dumpsys 使你可以轻松访问系统信息。
+如果你将映射到每个进程的所有物理 RAM 相加，然后将所有进程相加，结果将大于实际的总 RAM。使用 `dumpsys`，你可以获得有关每个 Java 进程的更清晰信息。`dumpsys` 提供的统计信息包含与应用程序内存相关的各种信息。`dumpsys` 是一个在设备上运行的 Android 工具，它会转储系统服务和应用程序的状态信息。`dumpsys` 使你可以轻松访问系统信息。
 
 * 以简单的字符串表示形式获取系统信息。
 * 使用转储的 CPU、RAM、电池和存储来检查应用程序如何影响整个设备。
 
-以下命令列出了 dumpsys 提供的所有服务：`~$ adb shell dumpsys | grep "dumpsys services"`
+以下命令列出了 `dumpsys` 提供的所有服务：`~$ adb shell dumpsys | grep "dumpsys services"`
 
-你可以使用 dumpsys meminfo 在 Android 上转储系统内存。
+你可以使用 `dumpsys meminfo` 在 Android 上转储系统内存。
 
 **dumpsys meminfo**
 
-adb 提供了许多工具来获取有关 Android 上正在运行的应用程序内存的信息。最常见和最快的方法是 `adb shell dumpsys meminfo` 命令。它报告有关每个 Java 进程、原生堆、二进制数据以及各种进程和系统信息的详细内存使用信息。以下命令将提供系统内存的快速概述：
+`adb` 提供了许多工具来获取有关 Android 上正在运行的应用程序内存的信息。最常见和最快的方法是 `adb shell dumpsys meminfo` 命令。它报告有关每个 Java 进程、原生堆、二进制数据以及各种进程和系统信息的详细内存使用信息。以下命令将提供系统内存的快速概述：
 
 `~$ adb shell dumpsys meminfo`
 
 这会在命令行中打印以下信息，使用 Nexus 6P(2560 x 1440 像素 - Android 8.1.0 和 Unity 2018.1)。
 
-```plain
+```plain:no-line-numbers
 * Applications Memory Usage (in Kilobytes):
 * Uptime: 6815563691 Realtime: 10882940478
 *
@@ -351,7 +353,7 @@ adb 提供了许多工具来获取有关 Android 上正在运行的应用程序�
 
 相比之下，使用具有完整 3D 场景和大量内容的应用程序执行相同的命令会打印以下信息：
 
-```plain
+```plain:no-line-numbers
 * Applications Memory Usage (in Kilobytes):
 * Uptime: 6823482422 Realtime: 10890859209
 *
@@ -409,7 +411,7 @@ adb 提供了许多工具来获取有关 Android 上正在运行的应用程序�
 
 | **区域(Area)** | **空场景 \[MB\]** | **完整场景 \[MB\]** | **描述(Description)** |
 | :--- | :--- | :--- | :--- |
-| Pss | 230 | 949 | 比例集大小(Proportional set size (Pss))是内核计算的一个指标，它考虑了内存共享。系统根据使用同一页的其他进程数量的比例来缩放进程中每页 RAM 的大小。所有私有页贡献其大小的 100%，共享内存贡献 **大小/(共享进程数)**。例如，在两个进程之间共享的页将贡献其大小的一半给每个进程的 Pss。这样，你可以通过将所有进程的 Pss 相加来计算使用的总 RAM。比较进程之间的 Pss 可以粗略了解它们的相对权重。 |
+| Pss(Proportional Set Size) | 230 | 949 | 比例集大小(Pss)，是内核计算的一个指标，它考虑了内存共享。系统根据使用同一页的其他进程数量的比例来缩放进程中每页 RAM 的大小。所有私有页贡献其大小的 100%，共享内存贡献 **大小/(共享进程数)**。例如，在两个进程之间共享的页将贡献其大小的一半给每个进程的 Pss。这样，你可以通过将所有进程的 Pss 相加来计算使用的总 RAM。比较进程之间的 Pss 可以粗略了解它们的相对权重。 |
 | Private Dirty | 203 | 825 | 最有趣和最昂贵的指标是 Private Dirty，它是进程内部无法分页到磁盘的 RAM 量，因为它没有磁盘上相同数据的支持，并且系统无法与任何其他进程**共享**。另一种看待方式是，这是应用程序销毁时系统将回收的 RAM。回收后，它会迅速被缓存和其他用途占用，因为系统必须充分利用有限的可用内存。 |
 | Native Heap | 51  | 328 | Native Heap 表示进程自身使用的内存，例如 Unity 引擎代码、原生 C mallocs 和 Mono VM。 |
 | Dalvik Heap | 12  | 12  | Dalvik Heap 是 Dalvik VM 分配的内存，例如 Unity Java Android 代码中的变量。 |
@@ -422,11 +424,11 @@ adb 提供了许多工具来获取有关 Android 上正在运行的应用程序�
 
 **procrank**
 
-dumpsys 的另一种选择是 procrank，这是另一个有用的工具，你可以使用它来查看所有进程的内存使用情况。它按使用量从高到低列出进程的内存使用情况。每个进程报告的大小是 Vss、Rss、Pss 和 Uss。
+`dumpsys` 的另一种选择是 `procrank`，这是另一个有用的工具，你可以使用它来查看所有进程的内存使用情况。它按使用量从高到低列出进程的内存使用情况。每个进程报告的大小是 Vss、Rss、Pss 和 Uss。
 
 `~$ adb shell procrank`
 
-```plain
+```plain:no-line-numbers
 * PID      Vss      Rss      Pss      Uss  cmdline
 *  890   84456K   48668K   25850K   21284K  system_server
 * 1231   50748K   39088K   17587K   13792K  com.android.launcher2
@@ -437,10 +439,10 @@ dumpsys 的另一种选择是 procrank，这是另一个有用的工具，你可
 *  977   24100K   24096K    5667K    4340K  android.process.acore
 ```
 
-* Vss - 虚拟集大小(Virtual set size)是进程可访问的总地址空间。它显示了与进程关联的虚拟内存量。
-* Rss - 常驻集大小(Resident Set Size)是分配给进程的物理页数。进程之间共享的页会被多次计数。
-* Pss - 比例集大小(Proportional Set Size)采用 Rss 数字，但将共享页平均分配给共享进程。例如，如果三个进程共享 9MB，则每个进程在 Pss 中获得 3MB。
-* Uss - 唯一集大小(Unique Set Size)也称为 Private Dirty，它基本上是进程内部无法分页到磁盘的 RAM 量，因为它没有磁盘上相同数据的支持，并且不与任何其他进程共享。
+* Vss - 虚拟集大小(Virtual set size)，是进程可访问的总地址空间。它显示了与进程关联的虚拟内存量。
+* Rss - 常驻集大小(Resident Set Size)，是分配给进程的物理页数。进程之间共享的页会被多次计数。
+* Pss - 比例集大小(Proportional Set Size)，采用 Rss 数字，但将共享页平均分配给共享进程。例如，如果三个进程共享 9MB，则每个进程在 Pss 中获得 3MB。
+* Uss - 唯一集大小(Unique Set Size)，也称为 Private Dirty，它基本上是进程内部无法分页到磁盘的 RAM 量，因为它没有磁盘上相同数据的支持，并且不与任何其他进程共享。
 
 注意：Pss 和 Uss 与 meminfo 的报告不同。Procrank 使用不同的内核机制来收集数据，这可能导致与 meminfo 不同的结果。
 
@@ -452,7 +454,7 @@ meminfo 命令提供了系统整体内存使用情况的摘要：
 
 前几个数字值得讨论。
 
-```plain
+```plain:no-line-numbers
 * MemTotal:        2866492 kB
 * MemFree:          244944 kB
 * Buffers:           36616 kB
@@ -460,11 +462,11 @@ meminfo 命令提供了系统整体内存使用情况的摘要：
 * SwapCached:        13744 kB
 ```
 
-* MemTotal 是内核和用户空间可用的总内存量，通常小于实际物理 RAM，因为手机还需要内存用于 GSM、缓冲区等。
-* MemFree 是完全未使用的 RAM 量。在 Android 上，这个数字通常非常小，因为系统会尝试始终使用所有可用内存来保持进程运行。
-* Cached 是用于文件系统缓存等的 RAM。
+* MemTotal，是内核和用户空间可用的总内存量，通常小于实际物理 RAM，因为手机还需要内存用于 GSM、缓冲区等。
+* MemFree，是完全未使用的 RAM 量。在 Android 上，这个数字通常非常小，因为系统会尝试始终使用所有可用内存来保持进程运行。
+* Cached，是用于文件系统缓存等的 RAM。
 
-有关更多信息，请阅读 [RAM 调查页面](https://developer.android.com/studio/profile/investigate-ram.html)和 [Android 性能指南](https://developer.android.com/topic/performance/memory.html)。
+有关更多信息，请阅读 [RAM 调查页面](https://developer.android.com/studio/profile/investigate-ram.html) 和 [Android 性能指南](https://developer.android.com/topic/performance/memory.html)。
 
 ### Android Studio
 
