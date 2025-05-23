@@ -134,6 +134,7 @@ article: false
 * [Clumsy 网络模拟](http://jagt.github.io/clumsy/index.html)
 * [ShadowSocks](https://github.com/shadowsocks)
 * [Snipaste](https://www.snipaste.com/)
+* [Notepad3](https://github.com/rizonesoft/Notepad3)
 
 **Kindle 书签**
 
