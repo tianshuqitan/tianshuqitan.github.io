@@ -11,6 +11,12 @@ AI 相关内容，如大模型、API 平台、AI IDE与插件等。
 
 ## 大模型
 
+**网页版**
+
+* [DeepSeek Chat](https://chat.deepseek.com/)
+* [通义](https://www.tongyi.com/)
+* [豆包](https://www.doubao.com/chat/)
+
 **模型下载**
 
 * [HuggingFace](https://huggingface.co/)
