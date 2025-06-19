@@ -35,6 +35,24 @@ AI 相关内容，如大模型、API 平台、AI IDE与插件等。
 * [Flux - Github](https://github.com/black-forest-labs/flux)
 * [Flux 官网](https://blackforestlabs.ai/)
 
+
+**ComfyUI**
+
+* [ComfyUI](https://www.comfy.org/download)
+  * [ComfyUI-Github](https://github.com/comfyanonymous/ComfyUI)
+  * [ComfyUI-Manager](https://github.com/Comfy-Org/ComfyUI-Manager)
+  * [ComfyUI-GGUF](https://github.com/city96/ComfyUI-GGUF)
+  * [ComfyUI-Crystools](https://github.com/crystian/ComfyUI-Crystools)
+  * [flux1-dev-fp8.safetensors](https://hf-mirror.com/Comfy-Org/flux1-dev)
+    * Flux1-Dev Check Point
+    * 已经包含了 TwoTextEncoders
+    * ConfyUI 中使用 Load CheckPoint 节点，`ComfyUI/models/checkpoints/`
+  * [flux1-schnell-fp8.safetensors](https://hf-mirror.com/Comfy-Org/flux1-schnell)
+    * Flux1-Schnell Check Point
+  * [flux1-schnell-Q4_K_S.gguf](https://hf-mirror.com/city96/FLUX.1-schnell-gguf)
+    * [black-forest-labs/FLUX.1-schnell](https://hf-mirror.com/black-forest-labs/FLUX.1-schnell) 量化模型
+    * ConfyUI 中使用 `ComfyUI-GGUF` 节点，放置目录 `ComfyUI/models/unet`
+
 **图生模型**
 
 * [Tripo](https://www.tripo3d.ai/)
