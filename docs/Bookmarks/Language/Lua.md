@@ -3,10 +3,6 @@ title: Lua
 article: false
 ---
 
-Lua 书签。
-
-<!-- more -->
-
 # Lua
 
 **官网**
@@ -17,8 +13,9 @@ Lua 书签。
 * [SampleCode](http://lua-users.org/wiki/SampleCode)
 * [Programming in Lua](https://www.lua.org/pil/contents.html)
 * [Luajit](https://luajit.org/)
+* [Luadec lua逆向](https://github.com/viruscamp/luadec)
 
-**其他**
+**文档**
 
 * [Cloudwu Lua5.3 中文文档](https://cloudwu.github.io/lua53doc/)
 

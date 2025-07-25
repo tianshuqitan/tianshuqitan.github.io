@@ -1,5 +1,5 @@
 ---
-title: 语言
+title: 杂项
 article: false
 index: false
 order: 0

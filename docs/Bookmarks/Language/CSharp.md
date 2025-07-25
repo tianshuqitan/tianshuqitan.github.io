@@ -3,10 +3,6 @@ title: C#
 article: false
 ---
 
-C# 书签。
-
-<!-- more -->
-
 # C#
 
 **官网**

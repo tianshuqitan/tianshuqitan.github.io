@@ -1,5 +1,5 @@
 ---
-title: 编程
+title: 设计模式
 article: false
 ---
 

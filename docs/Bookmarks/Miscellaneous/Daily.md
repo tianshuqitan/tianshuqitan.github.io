@@ -103,39 +103,6 @@ article: false
 * [贝壳](https://bj.zu.ke.com/zufang/shuangqiao/rt200600000001/)
 * [豆瓣](http://uz.yurixu.com/manage/beijing.php)
 
-**Sublime 书签**
-
-* [Packages](https://github.com/sublimehq/Packages)
-* [Lua-Language-Server](https://github.com/sumneko/lua-language-server)
-* [Sublimelsp](https://github.com/sublimelsp)
-* [Lsp doc](https://lsp.readthedocs.io/en/latest/#about-lsp)
-* [Sumneko lua](https://marketplace.visualstudio.com/items?itemName=sumneko.lua)
-* [QuickXDev GithuB](https://github.com/leitwolf/QuickXDev)
-* [QuickXDev 作者博客](https://my.oschina.net/lonewolf)
-* [CTags](https://github.com/SublimeText/CTags)
-* [Tmtheme-editor](http://tmtheme-editor.herokuapp.com/#!/editor/theme/Monokai)
-* [Sublime License](https://www.vcgsoft.com/sublime-text-2-x-3-x-universal-license-keys-collection-for-win-mac-lin-3211/)
-
-**软件**
-
-* [IDM repack](https://lrepacks.net/repaki-programm-dlya-interneta/56-internet-download-manager-repack.html)
-* [SVN 中文文档](https://tortoisesvn.net/docs/release/TortoiseSVN_zh_CN/index.html)
-* [Markdown Preview Enhanced](https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-cn/)
-* [Total Commander](https://www.ghisler.com/)
-* [Total Commander 插件](http://totalcmd.net/directory/lister.html)
-* [Sqlite](https://www.sqlite.org/download.html)
-* [Everything ](https://www.voidtools.com/zh-cn/downloads/)
-* [TeamViewer](https://login.teamviewer.com/LogOn)
-* [Drawio](https://github.com/jgraph/drawio)
-* [Cmder](https://cmder.net/)
-* [Edge 插件](https://microsoftedge.microsoft.com/addons/Microsoft-Edge-Extensions-Home?hl=zh-CN)
-* [Gitbook](https://www.gitbook.com/)
-* [Httrack](http://www.httrack.com/page/2/en/index.html)
-* [Clumsy 网络模拟](http://jagt.github.io/clumsy/index.html)
-* [ShadowSocks](https://github.com/shadowsocks)
-* [Snipaste](https://www.snipaste.com/)
-* [Notepad3](https://github.com/rizonesoft/Notepad3)
-
 **Kindle 书签**
 
 * [Z-Library](https://ur.pb1lib.org/)
@@ -145,20 +112,6 @@ article: false
 * [SaltTiger](https://salttiger.com/)
 * [Jiumodiary - 搜索](https://www.jiumodiary.com/)
 * [Dalipan - 搜索](https://www.dalipan.com/#/)
-
-**Github 书签**
-
-* [Protobuf](https://github.com/protocolbuffers/protobuf)
-* [LuaIde](https://github.com/k0204/LuaIde/)
-* [Lantern](https://github.com/getlantern/lantern)
-* [LeetCode All In One](https://github.com/grandyang/leetcode)
-* [Unity_Shaders_Book](https://github.com/candycat1992/Unity_Shaders_Book)
-* [Assimp - 模型加载库](https://github.com/assimp/assimp) 
-* [Lua-Protobuf](https://github.com/starwing/lua-protobuf)
-* [Imgui](https://github.com/ocornut/imgui)
-* [Create GitHub Resource Download Link](https://minhaskamal.github.io/DownGit/#/home?url=https:%2F%2Fgithub.com%2Fbouletmarc%2Fhl2_ep2_content%2Ftree%2Fmaster%2Fmodels%2Fprops_vehicles)
-* [Simple Image Search Engine](https://github.com/matsui528/sis)
-* [ASTC](https://github.com/ARM-software/astc-encoder)
 
 **技能**
 

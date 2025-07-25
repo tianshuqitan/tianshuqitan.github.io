@@ -3,55 +3,35 @@ title: "AI"
 article: false
 ---
 
-AI 相关内容，如大模型、API 平台、AI IDE与插件等。
-
-<!-- more -->
-
 # AI
 
 ## 大模型
 
 **网页版**
 
-* [DeepSeek Chat](https://chat.deepseek.com/)
+* [DeepSeek V3](https://chat.deepseek.com/)
+* [Kimi k2](https://www.kimi.com/)
+* [Qwen Chat - 3](https://chat.qwen.ai/)
 * [通义](https://www.tongyi.com/)
 * [豆包](https://www.doubao.com/chat/)
+* [Gemini - 2.5](https://gemini.google.com/app)
+* [Google AI Studio](https://aistudio.google.com/prompts/new_chat)
 
 **模型下载**
 
 * [HuggingFace](https://huggingface.co/)
 * [HuggingFace - 国内镜像](https://hf-mirror.com/)
 
-**推理模型**
+**API**
 
 * [Claude](https://www.anthropic.com/)
+  * 国内受限(注册/使用)
+* [Kimi k2](https://platform.moonshot.cn/)
 * [DeepSeek](https://www.deepseek.com/)
-* [Gemini](https://gemini.google.com/)
-* [Arena Leaderboard(排行榜)](https://web.lmarena.ai/leaderboard)
+  * [API](https://platform.deepseek.com/)
 * [Google AI 开发者](https://ai.google.dev/)
-
-**文生图**
-
-* [Flux - Github](https://github.com/black-forest-labs/flux)
-* [Flux 官网](https://blackforestlabs.ai/)
-
-
-**ComfyUI**
-
-* [ComfyUI](https://www.comfy.org/download)
-  * [ComfyUI-Github](https://github.com/comfyanonymous/ComfyUI)
-  * [ComfyUI-Manager](https://github.com/Comfy-Org/ComfyUI-Manager)
-  * [ComfyUI-GGUF](https://github.com/city96/ComfyUI-GGUF)
-  * [ComfyUI-Crystools](https://github.com/crystian/ComfyUI-Crystools)
-  * [flux1-dev-fp8.safetensors](https://hf-mirror.com/Comfy-Org/flux1-dev)
-    * Flux1-Dev Check Point
-    * 已经包含了 TwoTextEncoders
-    * ConfyUI 中使用 Load CheckPoint 节点，`ComfyUI/models/checkpoints/`
-  * [flux1-schnell-fp8.safetensors](https://hf-mirror.com/Comfy-Org/flux1-schnell)
-    * Flux1-Schnell Check Point
-  * [flux1-schnell-Q4_K_S.gguf](https://hf-mirror.com/city96/FLUX.1-schnell-gguf)
-    * [black-forest-labs/FLUX.1-schnell](https://hf-mirror.com/black-forest-labs/FLUX.1-schnell) 量化模型
-    * ConfyUI 中使用 `ComfyUI-GGUF` 节点，放置目录 `ComfyUI/models/unet`
+* [Google AI Studio](https://aistudio.google.com/prompts/new_chat)
+* [阿里云百炼](https://bailian.console.aliyun.com/)
 
 **图生模型**
 
@@ -70,7 +50,10 @@ AI 相关内容，如大模型、API 平台、AI IDE与插件等。
 * [RooCode](https://roocode.com/)
 * [Continue](https://www.continue.dev/)
 * [Trae(字节)](https://traeide.com/)
-* [Trae 下载(从文档进来的)](https://www.trae.ai/)
+* [Trae下载(从文档进来的)](https://www.trae.ai/)
+* [Claude Code](https://www.anthropic.com/claude-code)
+  * [Claude Code Router](https://github.com/musistudio/claude-code-router)
+* [Gemini-CLI](https://github.com/google-gemini/gemini-cli)
 
 ## MCP
 
@@ -91,6 +74,12 @@ AI 相关内容，如大模型、API 平台、AI IDE与插件等。
 * [OpenPoseEditor](https://openposeai.com/)
 * [OpenPoseEditor - ZhuYu(推荐)](https://zhuyu1997.github.io/open-pose-editor/?lng=zh)
 * [LLM 3D 可视化](https://bbycroft.net/llm)
+
+## AI 排名
+
+* [LMArena AI模型评估](https://lmarena.ai/)
+* [LMArena Leaderboard(排行版)](https://lmarena.ai/leaderboard)
+* [OpenRouter Leaderboard(API使用榜单)](https://openrouter.ai/rankings/programming?view=day)
 
 ## AI 翻译
 

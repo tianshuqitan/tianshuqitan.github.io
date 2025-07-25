@@ -1,5 +1,5 @@
 ---
-title: 语言
+title: AI
 article: false
 index: false
 order: 0

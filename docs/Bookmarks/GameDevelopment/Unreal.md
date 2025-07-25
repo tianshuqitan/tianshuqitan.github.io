@@ -7,10 +7,10 @@ article: false
 
 **官网**
 
-* [UE5 文档](https://dev.epicgames.com/documentation/zh-cn/unreal-engine/unreal-engine-5-5-documentation)
+* [UE5 官方文档](https://dev.epicgames.com/documentation/zh-cn/unreal-engine/unreal-engine-5-5-documentation)
 * [Unreal Engine - Github](https://github.com/EpicGames/UnrealEngine)
 * [Unreal Community](https://unrealcommunity.wiki/)
-* [Unreal 学习库](https://dev.epicgames.com/community/unreal-engine/learning)
+* [Unreal Learning](https://dev.epicgames.com/community/unreal-engine/learning)
 
 **BLOG**
 

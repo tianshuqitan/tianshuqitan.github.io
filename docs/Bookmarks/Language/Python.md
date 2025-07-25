@@ -3,10 +3,6 @@ title: Python
 article: false
 ---
 
-Python 书签。
-
-<!-- more -->
-
 # Python
 
 **官网**

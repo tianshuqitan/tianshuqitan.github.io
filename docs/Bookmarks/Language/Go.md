@@ -3,10 +3,6 @@ title: Go
 article: false
 ---
 
-Go 书签。
-
-<!-- more -->
-
 # Go
 
 **官网**
