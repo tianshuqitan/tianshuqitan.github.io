@@ -16,7 +16,7 @@ index: false
 
 理解托管堆(managed heap)对于 Unity 中的内存管理至关重要。有关分析托管内存和如何优化内存的更多信息，请参阅 Unity 手册中 [理解优化](https://docs.unity3d.com/Manual/analysis.html) 下的 [托管内存部分](https://docs.unity3d.com/Manual/performance-managed-memory.html)。
 
-> [Unity 2022.3 手册笔记](./Unity%20中的内存.md)
+> [Unity 中的内存](./../Manual/Unity%20中的内存.md)
 
 ## 资源(Assets)
 

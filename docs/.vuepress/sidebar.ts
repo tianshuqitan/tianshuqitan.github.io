@@ -9,6 +9,7 @@ export const sidebarConfig = sidebar({
     "/Bookmarks/": "structure",
     "/Language/": "structure",
     "/Unity/": [
+        "README.md",
         "RoadMap/",
         "Manual/",
         "Notes/",

@@ -14,6 +14,7 @@ export default navbar([
         text: "Unity",
         prefix: "Unity/",
         children: [
+            "README.md",
             "RoadMap/README.md",
             "Manual/README.md",
             "Notes/README.MD",
