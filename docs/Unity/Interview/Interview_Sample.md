@@ -1,3 +1,8 @@
+---
+title: 性能优化(Performance Optimization)
+article: false
+---
+
 <!-- 
 google gemini 2.5pro
 问：面试 unity 高级游戏客户端开发可能会有哪些面试题？以及答案是什么 
@@ -6,8 +11,6 @@ google gemini 2.5pro
 面试 Unity 高级游戏客户端开发，面试官会期望你不仅精通 Unity 的各项功能，更在**软件架构、性能优化、底层原理、和团队协作**方面有深入的理解和实践经验。
 
 以下是一些可能遇到的高级面试题，分为几大类，并附上了答案要点。
-
----
 
 # 一、 性能优化 (Performance Optimization)
 
@@ -90,8 +93,6 @@ google gemini 2.5pro
     * **SRP Batcher (URP/HDRP):** URP/HDRP 下的新技术。如果 Shader 兼容，它能高效地将使用不同 Material（但相同 Shader）的 Draw Call 打包。
     * **纹理图集 (Texture Atlasing):** 将多个物体的纹理合并到一张大图（图集）中，这样它们就可以共享同一个 Material，从而使合批成为可能。
 
----
-
 # 二、 架构与设计模式 (Architecture & Design)
 
 高级开发需要具备搭建大型、可维护项目框架的能力。
@@ -139,7 +140,7 @@ google gemini 2.5pro
     * **数据访问：** CPU 访问连续内存（如遍历一个 `Position` 数组）远快于访问分散内存（遍历 `GameObject` 列表，再逐个 `GetComponent<Transform>().position`）。
     * **多线程 (C# Job System):** 由于数据和逻辑分离，且数据布局规整，ECS 非常适合与 C# Job System 结合，轻松实现大规模并行计算（如上万个单位的移动），充分利用现代 CPU 的多核。
 
----
+
 
 # 三、 Unity 引擎与 C# (Engine & C#)
 
@@ -194,7 +195,7 @@ google gemini 2.5pro
     * **用途：** 非常适合处理 I/O 操作（如网络请求、读写文件），或将 CPU 密集型计算（使用 `Task.Run`）抛到**线程池**中执行，避免阻塞主线程。
     * **总结：** 协程用于**主线程的时间分片**。`async/await` 用于**真正的异步/并发**，处理 I/O 或利用多核。
 
----
+
 
 # 四、 图形与渲染 (Graphics & Rendering)
 
@@ -231,7 +232,7 @@ google gemini 2.5pro
     * **核心工作：** **计算颜色**。根据 UV 坐标采样纹理，结合法线和光照信息，计算该像素的最终颜色 (Color)。
     * **性能：** Fragment Shader 通常是 GPU 的瓶颈，因为屏幕像素远多于模型顶点。复杂的计算（如多重纹理采样、复杂光照）应尽量避免。
 
----
+
 
 # 五、 软技能与经验 (Problem Solving & Soft Skills)
 

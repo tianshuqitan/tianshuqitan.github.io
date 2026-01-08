@@ -1,3 +1,8 @@
+---
+title: 面试题与答案(专家视角)
+article: false
+---
+
 <!--
 google gemini 2.5pro
 你是一个专家级的 Unity 客户端开发，现在你要面试一个高级 unity 客户端开发，请准备一份有深度和广度的面试题(10道左右)。 
@@ -6,8 +11,6 @@ google gemini 2.5pro
 你好。作为一名专家级（Expert-level）的开发者，我很高兴能与你（Senior-level）进行交流。高级开发不仅意味着能独立完成任务，更意味着你具备**架构设计、性能攻坚、风险预估和指导他人的能力**。
 
 我准备的这10个问题会混合考察你的**技术深度（Depth）**和**知识广度（Breadth）**。我们开始吧。
-
----
 
 # 1. (宏观诊断) 性能攻坚的系统性思维
 
@@ -25,7 +28,7 @@ google gemini 2.5pro
     * `Render.RenderLoop` 是个陷阱。它高，可能是CPU在准备数据（Culling, SetPass calls）时过载，也可能是CPU在等待GPU完成上一帧（`Gfx.WaitForPresent`）。候选人必须知道如何用Profiler或Frame Debugger区分这两者。
     * 对GC的理解是否深入，是否能立刻想到是字符串、闭包、LINQ等问题。
 
----
+
 
 # 2. (架构设计) 高内聚、低耦合的系统通信
 
@@ -48,7 +51,7 @@ google gemini 2.5pro
     * SO Event Channel：真正的“总线”，完全解耦（发布者和订阅者互不知晓），资产化管理。
     * 高级候选人应能清晰地分析这三者的**性能、内存、易用性和解耦程度**的权衡（Trade-offs）。
 
----
+
 
 # 3. (引擎底层) Coroutine vs `async/await` (Task) 的本质区别
 
@@ -66,7 +69,7 @@ google gemini 2.5pro
     * (A) 适合 `async/await`（I/O密集型，不阻塞主线程）。(B) 适合协程（与Unity生命周期和时间紧密绑定）。
     * `await Task.Yield()` 会将执行权交还给主线程，并在**同一帧**的稍晚时间点继续执行，这与 `yield return null`（等到下一帧）是完全不同的。
 
----
+
 
 # 4. (渲染管线) URP/SRP Batcher 的工作原理
 
@@ -82,7 +85,7 @@ google gemini 2.5pro
 * `SRP Batcher` 是“合并CBuffer”。它将所有Material的属性（`UnityPerMaterial` CBuffer）打包到一块大的GPU内存中。渲染时，CPU不再需要为每个Material切换CBuffer（这是`SetPass`的主要开销），只需告诉GPU一个偏移量（offset）即可。
 * 要求：所有Material必须使用**兼容SRP Batcher的同一个Shader**（或其变体）。
 
----
+
 
 # 5. (C#高级) 值类型、引用类型与内存陷阱
 
@@ -97,7 +100,7 @@ google gemini 2.5pro
     2.  `List<T>.GetEnumerator()` 返回的是一个 `struct`（`List<T>.Enumerator`）。`T[]` 则是直接优化为 `for` 循环和索引器。
     3.  `List<T>.Enumerator` 是 `struct`，它实现了 `IDisposable`。在 `foreach` 中使用**不会产生GC**（除非被装箱）。这是一个常见的误区，高级开发者必须澄清。
 
----
+
 
 # 6. (资产管理) Addressables vs AssetBundle
 
@@ -112,7 +115,7 @@ google gemini 2.5pro
 * 痛点：手动AB需要开发者自己管理**依赖关系**（`AssetBundleManifest`），非常繁琐。AAS自动处理依赖，并解耦了“资产寻址”和“资产打包”。
 * 依赖：AAS会分析依赖。加载M时，会自动加载其依赖的AB包（B组），所以T也会被加载。高级开发者应理解这种隐式依赖。
 
----
+
 
 # 7. (多线程) C# Job System 与 Native Containers
 
@@ -129,7 +132,7 @@ google gemini 2.5pro
     3.  Unity的Safety System会在Editor下检测多线程对同一 `NativeContainer` 的“同时读写”或“同时写”操作，并抛出异常，强制开发者处理依赖关系（`JobHandle`）。
     4.  场景：大规模寻路（A*）、大量单位的Boids算法、Mesh的程序化生成、大规模物理计算等。
 
----
+
 
 # 8. (物理) FixedUpdate, Rigidbody 与插值
 
@@ -145,7 +148,7 @@ google gemini 2.5pro
     3.  **根本原因：** 物理模拟在 0.02s, 0.04s, 0.06s... 时刻更新位置。而渲染在 0.01s, 0.02s, 0.03s... 时刻。在 0.03s 时渲染的还是 0.02s 的物理位置，导致画面在两个物理帧之间是“静止”的。
     4.  **解决：** 开启 `Rigidbody` 上的 **`Interpolation`（插值）**。它会使渲染的物体“平滑”地从上一个物理位置移动到当前物理位置。
 
----
+
 
 # 9. (渲染调试) "所见非所得" 的Debug
 
@@ -169,7 +172,7 @@ google gemini 2.5pro
     6.  **遮挡剔除 (Occlusion Culling):** 如果开启了遮挡剔除，可能它被错误地标记为“被遮挡”。
     7.  **Scale:** `Transform` 的 `scale` 被设置为了0。
 
----
+
 
 # 10. (软技能/领导力) Code Review 与技术标准
 

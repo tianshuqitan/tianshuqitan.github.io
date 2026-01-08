@@ -15,4 +15,9 @@ export const sidebarConfig = sidebar({
         "Notes/",
         "Optimization/",
     ],
+    "/Nodejs/":[
+        "README.md",
+        "npm.md",
+        "pnpm.md"
+    ]
 });

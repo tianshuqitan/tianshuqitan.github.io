@@ -114,7 +114,7 @@ export default {
 
 ```
 home: true
-layout: BlogHome
+layout: Blog
 ```
 
 首页关闭背景和名称
