@@ -6,7 +6,8 @@ index: false
 
 # Unity 中的内存
 
-[原文地址 - UnityManual](https://docs.unity3d.com/2022.3/Documentation/Manual/performance-memory-overview.html)
+* [原文地址 - Manual(中文Unity6.0)](https://docs.unity3d.com/cn/current/Manual/performance-memory-overview.html)
+* [原文地址 - Manual(英文)](https://docs.unity3d.com/Manual/performance-memory-overview.html)
 
 为了确保您的应用程序运行时没有性能问题，了解 Unity 如何使用和分配内存非常重要。本文档的这一部分解释了 Unity 中内存的工作原理，旨在帮助希望提高应用程序内存性能的读者。
 
