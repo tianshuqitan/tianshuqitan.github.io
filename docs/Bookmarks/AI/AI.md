@@ -5,33 +5,48 @@ article: false
 
 # AI
 
+主流大模型，[OpenRouter Leaderboard(API使用榜单)](https://openrouter.ai/rankings/programming?view=day)。
+> 2026年4月10日19:54:31 
+
+**国外大模型**
+
+* [ChatGPT](https://chatgpt.com/)
+  * 公司: [OpenAI](https://openai.com/zh-Hans-CN/)
+  * 版本: GPT-5.4
+* [Claude](https://claude.com/)
+  * 公司: [Anthropic](https://www.anthropic.com/)
+  * CLI: [Claude Code](https://claude.com/product/claude-code)
+  * 版本: Claude Opus 4.6
+* [Gemini](https://gemini.google.com/)
+  * 公司: Google
+  * 版本: Gemini 3
+  * [Google AI Studio](https://aistudio.google.com/prompts/new_chat)
+  * [Gemma 4(开源)](https://deepmind.google/models/gemma/)
+
+**国内大模型**
+
+* [豆包](https://www.doubao.com/)
+  * 公司: 字节跳动
+* [DeepSeek-V3](https://www.deepseek.com/)
+  * 公司: 杭州深度求索人工智能基础技术研究有限公司
+  * 版本: DeepSeekV3
+* [通义实验室](https://tongyi.aliyun.com/)
+  * 公司: 阿里巴巴
+  * 版本: Qwen3.5
+  * 对话: [千问](https://www.qianwen.com/) [QwenChat](https://chat.qwen.ai/)
+* [GLM](https://glm-5.org/zh/)
+  * 公司: [智谱大模型](https://www.bigmodel.cn/) [智谱](https://www.zhipuai.cn/zh) 
+  * 版本: GLM-5
+* [Kimi](https://www.kimi.com/zh/)
+  * 公司: [月之暗面](https://www.moonshot.cn/)
+  * 版本: K2.5
+
 ## 大模型
-
-**网页版**
-
-* [DeepSeek V3](https://chat.deepseek.com/)
-* [Kimi k2](https://www.kimi.com/)
-* [Qwen Chat - 3](https://chat.qwen.ai/)
-* [通义](https://www.tongyi.com/)
-* [豆包](https://www.doubao.com/chat/)
-* [Gemini - 2.5](https://gemini.google.com/app)
-* [Google AI Studio](https://aistudio.google.com/prompts/new_chat)
 
 **模型下载**
 
 * [HuggingFace](https://huggingface.co/)
 * [HuggingFace - 国内镜像](https://hf-mirror.com/)
-
-**API**
-
-* [Claude](https://www.anthropic.com/)
-  * 国内受限(注册/使用)
-* [Kimi k2](https://platform.moonshot.cn/)
-* [DeepSeek](https://www.deepseek.com/)
-  * [API](https://platform.deepseek.com/)
-* [Google AI 开发者](https://ai.google.dev/)
-* [Google AI Studio](https://aistudio.google.com/prompts/new_chat)
-* [阿里云百炼](https://bailian.console.aliyun.com/)
 
 **图生模型**
 
@@ -39,21 +54,9 @@ article: false
 * [Trellis3D](https://trellis3d.github.io/)
 * [Trellis3D - Online](https://huggingface.co/spaces/JeffreyXiang/TRELLIS)
 
-## 大模型 API 平台
+## 大模型 API 聚合平台
 
 * [OpenRouter](https://openrouter.ai/)
-
-## IDE/Plugins
-
-* [Cursor](https://www.cursor.com/)
-* [Cline](https://app.cline.bot/)
-* [RooCode](https://roocode.com/)
-* [Continue](https://www.continue.dev/)
-* [Trae(字节)](https://traeide.com/)
-* [Trae下载(从文档进来的)](https://www.trae.ai/)
-* [Claude Code](https://www.anthropic.com/claude-code)
-  * [Claude Code Router](https://github.com/musistudio/claude-code-router)
-* [Gemini-CLI](https://github.com/google-gemini/gemini-cli)
 
 ## MCP
 
@@ -80,6 +83,10 @@ article: false
 * [LMArena AI模型评估](https://lmarena.ai/)
 * [LMArena Leaderboard(排行版)](https://lmarena.ai/leaderboard)
 * [OpenRouter Leaderboard(API使用榜单)](https://openrouter.ai/rankings/programming?view=day)
+
+## AICode
+
+* [AICode](./AICode.md)
 
 ## AI 翻译
 
