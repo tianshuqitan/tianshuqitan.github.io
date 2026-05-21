@@ -117,8 +117,30 @@ code-simplifier	代码简化
 context7	库文档查询
 ```
 
+**[阿里云百炼接入ClaudeCode](https://help.aliyun.com/zh/model-studio/claude-code)**
+
+```json
+{
+  "ANTHROPIC_BASE_URL": "https://dashscope.aliyuncs.com/apps/anthropic",
+  "ANTHROPIC_API_KEY|ANTHROPIC_AUTH_TOKEN": "YOUR_DASHSCOPE_API_KEY",
+  "ANTHROPIC_MODEL": "glm-5.1|glm-5|glm-4.7|glm-4.6"
+}
+```
+
+**[Kimi 接入 ClaudeCode](https://www.kimi.com/code/docs/more/third-party-agents.html)**
+
+```json
+{
+  "ANTHROPIC_BASE_URL": "https://api.kimi.com/coding/",
+  "ANTHROPIC_API_KEY|ANTHROPIC_AUTH_TOKEN": "YOUR_DASHSCOPE_API_KEY",
+  "ANTHROPIC_DEFAULT_HAIKU_MODEL": "kimi-for-coding",
+  "ANTHROPIC_DEFAULT_SONNET_MODEL": "kimi-for-coding",
+  "ANTHROPIC_DEFAULT_OPUS_MODEL": "kimi-for-coding"
+}
+```
+
 ## Coding Plan
 
-* [阿里云百炼-需要抢购](https://help.aliyun.com/zh/model-studio/coding-plan)
-* [智谱-需要抢购](https://bigmodel.cn/glm-coding)
+* [阿里云百炼-需要抢购(09:30)](https://common-buy.aliyun.com/coding-plan)
+* [智谱-需要抢购(10:00)](https://bigmodel.cn/glm-coding)
 * [腾讯云-需要抢购](https://console.cloud.tencent.com/tokenhub/codingplan)
