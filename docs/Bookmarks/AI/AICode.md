@@ -36,6 +36,8 @@
     * 跳过 Anthropic 账号/登录。
     * 支持更换模型 OpenRouter、DeepSeek、Gemini。
     * 如果官方适配(如 GLM)，就不需要了。
+  * [Claude Code for VS Code](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code)
+    * 插件可独立使用，不需要额外安装 Claude Code
 * [Codex](https://developers.openai.com/codex/cli)
   * `npm i -g @openai/codex`
 * [Gemini CLI](https://geminicli.com/)
