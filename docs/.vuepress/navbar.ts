@@ -16,7 +16,7 @@ export default navbar([
         prefix: "Unity/",
         children: [
             {
-                text: "Unity 主页",
+                text: "Unity官网",
                 icon: "house",
                 link: "README.md",
             },

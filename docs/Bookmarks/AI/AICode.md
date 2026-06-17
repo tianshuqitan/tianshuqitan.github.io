@@ -1,4 +1,9 @@
-# AICode
+---
+title: "AI Code"
+article: false
+---
+
+# AI Code
 
 * [VibeVibe](https://www.vibevibe.cn/zh/)
 
