@@ -182,6 +182,8 @@ export default {
 };
 ```
 
+去 [FontAwesome 官方图标库](https://fontawesome.com/icons)搜索，搜索到图标后，复制它的名称（不带 fa- 前缀）填到 icon 字段即可。
+
 在 Markdown 中
 
 ```

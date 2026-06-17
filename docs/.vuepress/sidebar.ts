@@ -19,5 +19,11 @@ export const sidebarConfig = sidebar({
         "README.md",
         "npm.md",
         "pnpm.md"
-    ]
+    ],
+    // 博客插件生成的页面使用自动生成目录
+    "/category/": "structure",
+    "/tag/": "structure",
+    "/article/": "structure",
+    "/star/": "structure",
+    "/timeline/": "structure",
 });

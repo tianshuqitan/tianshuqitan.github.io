@@ -8,10 +8,12 @@ export default hopeTheme({
     navbar: navbar,
     // 侧边栏
     sidebar: sidebarConfig,
+    // 深色模式：提供切换开关，默认跟随系统
+    // darkmode: "switch",
     // 启用插件
     plugins: {
         blog: {
-            excerptLength: 0
+            excerptLength: 120,
         },
         slimsearch: true,
         icon: {
@@ -30,9 +32,11 @@ export default hopeTheme({
     },
     // 显示页脚
     displayFooter: true,
-    // footer: "Copyright © 2024 Mr.Chen",
+    // footer: "Copyright © 2026 Mr.Chen",
     // 页面元数据设置
     contributors: false,
     editLink: false,
     changelog: false,
+    // 目录自动展开深度
+    catalog: true,
 });
