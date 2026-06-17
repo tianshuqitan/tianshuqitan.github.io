@@ -42,53 +42,53 @@ export default navbar([
             }
         ]
     },
-    {
-        text: "Nodejs",
-        icon: "node",
-        prefix: "Nodejs/",
-        children:[
-            {
-                text: "Nodejs 主页",
-                icon: "house",
-                link: "README.md",
-            },
-            {
-                text: "npm",
-                icon: "box-open",
-                link: "npm.md",
-            },
-            {
-                text: "pnpm",
-                icon: "box-open",
-                link: "pnpm.md",
-            }
-        ],
-    },
-    {
-        text: "Vue",
-        icon: "vuejs",
-        prefix: "Vue/",
-        children: [
-            {
-                text: "Vue 主页",
-                icon: "house",
-                link: "README.md",
-            },
-            {
-                text: "VuePress",
-                icon: "scroll",
-                link: "Vuepress/",
-            },
-        ],
-    },
+    // {
+    //     text: "Nodejs",
+    //     icon: "node",
+    //     prefix: "Nodejs/",
+    //     children:[
+    //         {
+    //             text: "Nodejs 主页",
+    //             icon: "house",
+    //             link: "README.md",
+    //         },
+    //         {
+    //             text: "npm",
+    //             icon: "box-open",
+    //             link: "npm.md",
+    //         },
+    //         {
+    //             text: "pnpm",
+    //             icon: "box-open",
+    //             link: "pnpm.md",
+    //         }
+    //     ],
+    // },
+    // {
+    //     text: "Vue",
+    //     icon: "vuejs",
+    //     prefix: "Vue/",
+    //     children: [
+    //         {
+    //             text: "Vue 主页",
+    //             icon: "house",
+    //             link: "README.md",
+    //         },
+    //         {
+    //             text: "VuePress",
+    //             icon: "scroll",
+    //             link: "Vuepress/",
+    //         },
+    //     ],
+    // },
     {
         text: "书签",
         icon: "bookmark",
         link: "/Bookmarks/"
     },
-    {
-        text: "编程语言",
-        icon: "code",
-        link: "/Language/"
-    }
+    // {
+    //     text: "编程语言",
+    //     icon: "code",
+    //     link: "/Language/"
+    // }
 ]);

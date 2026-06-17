@@ -5,61 +5,61 @@ article: false
 
 # AI Code
 
-* [VibeVibe](https://www.vibevibe.cn/zh/)
+<div class="vp-card-container">
 
-## AI IDE
+<VPCard title="VibeVibe" desc="Vibe Coding 教程。Next.js, React, 全栈开发，适合初学者和进阶学习者。" logo="https://www.vibevibe.cn/logo.png" link="https://www.vibevibe.cn/zh/" background="rgba(255, 255, 255, 0.15)" />
 
-基本都是基于 VSCode 做的编辑器，可选择大模型。
+<VPCard title="OpenCode" desc="开源 AI 编程代理，支持 Claude, GPT, Gemini 等模型" logo="https://opencode.ai/favicon-96x96-v3.png" link="https://opencode.ai/zh" background="rgba(59, 130, 246, 0.15)" />
 
-* [OpenCode](https://opencode.ai/zh)
-  * 开源 AI 编程代理，内置免费模型，或连接任意提供商的任意模型，包括 Claude, GPT, Gemini 等。
-* [Cursor](https://cursor.com/cn)
-* [Trae](https://www.trae.cn/)
-  * 公司: 字节跳动
-* [Windsurf](https://windsurf.com/)
+<VPCard title="Cursor" desc="专为让您实现超高生产力而打造，最佳 AI 编程智能体" logo="https://cursor.com/marketing-static/og/opengraph-default.png" link="https://cursor.com/cn" background="rgba(247, 247, 244, 0.15)" />
+
+<VPCard title="Trae" desc="国内首款 AI 原生集成开发环境，深度集成 Doubao-1.5-pro 与 DeepSeek 模型" logo="https://lf-cdn.trae.com.cn/obj/trae-com-cn/trae_website_prod_cn/favicon.png" link="https://www.trae.cn/" background="rgba(59, 130, 246, 0.15)" />
+
+<VPCard title="Devin" desc="原 Windsurf，管理本地和云端 Agent 舰队，规划、委托、审查一站式完成" logo="https://devin.ai/icon.png" link="https://devin.ai/" background="rgba(99, 102, 241, 0.15)" />
+
+</div>
 
 ## AI 插件
 
-* [Claude Code(推荐)](https://claude.com/product/claude-code)
-* [Codex](https://developers.openai.com/codex/ide)
-  * OpenAI’s coding agent
-* [RooCode(推荐)](https://roocode.com/)
-  * Cline 分支
-* [OpenCode](https://opencode.ai/zh)
-* [Cline](https://cline.bot/)
-* [Copilot](https://github.com/features/copilot)
-  * VSCode 自带，有一定的免费额度
-  * 默认模型: Claude Haiku 4.5
-* [通义灵码](https://lingma.aliyun.com/lingma)
+<div class="vp-card-container">
+
+<VPCard title="Claude Code" desc="推荐 - Anthropic 官方 CLI 编程代理" logo="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/ce67964e7-CAX1bqSh.png" link="https://claude.com/product/claude-code" background="rgba(217, 119, 87, 0.15)" />
+
+<VPCard title="Codex" desc="OpenAI's coding agent" logo="https://www.google.com/s2/favicons?domain=openai.com&sz=64" link="https://developers.openai.com/codex/ide" background="rgba(16, 163, 127, 0.15)" />
+
+<VPCard title="RooCode" desc="推荐 - Cline 分支，功能增强" logo="https://www.google.com/s2/favicons?domain=roocode.com&sz=64" link="https://roocode.com/" background="rgba(59, 130, 246, 0.15)" />
+
+<VPCard title="Cline" desc="VSCode AI 编程插件" logo="https://cline.bot/assets/branding/favicons/favicon-256x256.png" link="https://cline.bot/" background="rgba(139, 92, 246, 0.15)" />
+
+<VPCard title="Copilot" desc="VSCode 自带，有一定免费额度" logo="https://github.githubassets.com/favicons/favicon.svg" link="https://github.com/features/copilot" background="rgba(36, 41, 47, 0.15)" />
+
+<VPCard title="通义灵码" desc="阿里云 AI 编程助手" logo="https://www.google.com/s2/favicons?domain=lingma.aliyun.com&sz=64" link="https://lingma.aliyun.com/lingma" background="rgba(255, 106, 0, 0.15)" />
+
+</div>
 
 ## CLI 命令行工具
 
-* [Claude Code](https://claude.com/product/claude-code)
-  * `npm install -g @anthropic-ai/claude-code`
-  * [Claude Code Router](https://github.com/musistudio/claude-code-router)
-    * CLI 代理。
-    * 跳过 Anthropic 账号/登录。
-    * 支持更换模型 OpenRouter、DeepSeek、Gemini。
-    * 如果官方适配(如 GLM)，就不需要了。
-  * [Claude Code for VS Code](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code)
-    * 插件可独立使用，不需要额外安装 Claude Code
-* [Codex](https://developers.openai.com/codex/cli)
-  * `npm i -g @openai/codex`
-* [Gemini CLI](https://geminicli.com/)
-  * `npm install -g @google/gemini-cli`
-* [Cline CLI](https://cline.bot/)
-  * `npm install -g cline`
-* [QwenCode](https://qwen.ai/qwencode)
-  * https://qwen.ai/blog?id=qwen3-coder
-  * 修改自 Gemini CLI，针对 Qwen3‑Coder 系列的模型增强了解析器和工具支持。
-* [OpenCode](https://opencode.ai/zh)
-  * `npm i -g opencode-ai`
+<div class="vp-card-container">
 
-## ClaudeCode + GLM
+<VPCard title="Claude Code" desc="npm install -g @anthropic-ai/claude-code" logo="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/ce67964e7-CAX1bqSh.png" link="https://claude.com/product/claude-code" background="rgba(217, 119, 87, 0.15)" />
+
+<VPCard title="Codex" desc="npm i -g @openai/codex" logo="https://www.google.com/s2/favicons?domain=openai.com&sz=64" link="https://developers.openai.com/codex/cli" background="rgba(16, 163, 127, 0.15)" />
+
+<VPCard title="Gemini CLI" desc="npm install -g @google/gemini-cli" logo="https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_16dp.png" link="https://geminicli.com/" background="rgba(66, 133, 244, 0.15)" />
+
+<VPCard title="Cline CLI" desc="npm install -g cline" logo="https://cline.bot/assets/branding/favicons/favicon-256x256.png" link="https://cline.bot/" background="rgba(139, 92, 246, 0.15)" />
+
+<VPCard title="QwenCode" desc="修改自 Gemini CLI，针对 Qwen3-Coder 增强" logo="https://www.google.com/s2/favicons?domain=qwen.ai&sz=64" link="https://qwen.ai/qwencode" background="rgba(99, 102, 241, 0.15)" />
+
+<VPCard title="OpenCode" desc="npm i -g opencode-ai" logo="https://opencode.ai/favicon-96x96-v3.png" link="https://opencode.ai/zh" background="rgba(59, 130, 246, 0.15)" />
+
+</div>
+
+## Claude Code + GLM
 
 [配置参考](https://docs.bigmodel.cn/cn/coding-plan/tool/claude)
 
-**安装ClaudeCode**
+**安装 Claude Code**
 
 ```bash
 npm install -g @anthropic-ai/claude-code
@@ -77,7 +77,7 @@ claude --version
 
 **GLM**
 
-[智谱API平台](https://bigmodel.cn/apikey/platform) 创建 API_KEY
+[智谱 API 平台](https://bigmodel.cn/apikey/platform) 创建 API_KEY
 
 Windows 新建 `用户名/.claude/settings.json`
 
@@ -124,7 +124,7 @@ code-simplifier	代码简化
 context7	库文档查询
 ```
 
-**[阿里云百炼接入ClaudeCode](https://help.aliyun.com/zh/model-studio/claude-code)**
+**[阿里云百炼接入 Claude Code](https://help.aliyun.com/zh/model-studio/claude-code)**
 
 ```json
 {
@@ -134,7 +134,7 @@ context7	库文档查询
 }
 ```
 
-**[Kimi 接入 ClaudeCode](https://www.kimi.com/code/docs/more/third-party-agents.html)**
+**[Kimi 接入 Claude Code](https://www.kimi.com/code/docs/more/third-party-agents.html)**
 
 ```json
 {
@@ -148,6 +148,12 @@ context7	库文档查询
 
 ## Coding Plan
 
-* [阿里云百炼-需要抢购(09:30)](https://common-buy.aliyun.com/coding-plan)
-* [智谱-需要抢购(10:00)](https://bigmodel.cn/glm-coding)
-* [腾讯云-需要抢购](https://console.cloud.tencent.com/tokenhub/codingplan)
+<div class="vp-card-container">
+
+<VPCard title="阿里云百炼" desc="需要抢购，每日 09:30" logo="https://www.google.com/s2/favicons?domain=aliyun.com&sz=64" link="https://common-buy.aliyun.com/coding-plan" background="rgba(255, 106, 0, 0.15)" />
+
+<VPCard title="智谱" desc="需要抢购，每日 10:00" logo="https://www.google.com/s2/favicons?domain=bigmodel.cn&sz=64" link="https://bigmodel.cn/glm-coding" background="rgba(59, 130, 246, 0.15)" />
+
+<VPCard title="腾讯云" desc="需要抢购" logo="https://www.google.com/s2/favicons?domain=cloud.tencent.com&sz=64" link="https://console.cloud.tencent.com/tokenhub/codingplan" background="rgba(0, 115, 230, 0.15)" />
+
+</div>

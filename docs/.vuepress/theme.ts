@@ -22,6 +22,9 @@ export default hopeTheme({
         icon: {
             assets: "fontawesome",
         },
+        components: {
+            components: ["VPCard"],
+        },
     },
     // 博客模式
     blog: {
